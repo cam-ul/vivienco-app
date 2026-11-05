@@ -1,0 +1,26 @@
+:root {
+  /* Paleta de Colores Vivienco */
+  --verde-vivienco: #0B3B36;
+  --verde-oscuro: #062C29;
+  --dorado-vivienco: #C9A24A;
+  --dorado-claro: #E8D39A;
+  --blanco: #FFFFFF;
+  --fondo: #F7F8F6;
+  --texto: #172033;
+  --texto-secundario: #64748B;
+
+  /* Tipografía base */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--fondo);
+  color: var(--texto);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+}
