@@ -1,0 +1,120 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 4%;
+  background-color: var(--blanco);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-titulo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--verde-vivienco);
+  letter-spacing: 4px;
+}
+
+.logo-subtitulo {
+  font-size: 0.55rem;
+  color: var(--texto-secundario);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.navbar-enlaces {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+.navbar-enlaces a {
+  text-decoration: none;
+  color: var(--texto);
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.navbar-enlaces a:hover {
+  color: var(--verde-vivienco);
+}
+
+.navbar-acciones {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-solicitar {
+  background-color: var(--verde-oscuro);
+  color: var(--blanco);
+  padding: 0.7rem 1.2rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.btn-solicitar:hover {
+  background-color: var(--verde-vivienco);
+}
+
+.btn-admin {
+  background-color: var(--fondo);
+  border: 1px solid #E4E0D8;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--texto);
+  transition: all 0.3s;
+}
+
+.btn-admin:hover {
+  background-color: var(--dorado-claro);
+  color: var(--verde-vivienco);
+  border-color: var(--dorado-vivienco);
+}
+
+.btn-movil {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--verde-vivienco);
+  cursor: pointer;
+}
+
+/* Diseño Responsive para Celulares */
+@media (max-width: 1024px) {
+  .navbar-enlaces {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--blanco);
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-align: center;
+  }
+  .navbar-enlaces.activo {
+    display: flex;
+  }
+  .btn-solicitar {
+    display: none; /* Se oculta el botón largo en móviles por espacio */
+  }
+  .btn-movil {
+    display: block;
+  }
+}
