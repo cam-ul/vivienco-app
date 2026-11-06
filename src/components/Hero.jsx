@@ -1,10 +1,9 @@
 import './Hero.css';
-import { UserCheck, ShieldCheck, Landmark, GraduationCap, FileCheck } from 'lucide-react';
+import { UserCheck, ShieldCheck, Landmark, GraduationCap } from 'lucide-react';
 
 function Hero() {
   return (
     <section className="hero-seccion" id="inicio">
-      {/* Columna Izquierda */}
       <div className="hero-izquierda">
         <h1 className="hero-titulo">
           HACEMOS REALIDAD <br />
@@ -44,7 +43,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Columna Derecha con Casa Moderna y Tarjeta Flotante */}
       <div className="hero-derecha">
         <div className="mancha-verde-fondo"></div>
         <img
@@ -52,17 +50,6 @@ function Hero() {
           alt="Casa moderna Vivienco"
           className="foto-casa-hero"
         />
-
-        <div className="tarjeta-estudio-flotante">
-          <div className="icono-estudio-circulo">
-            <FileCheck size={24} color="#0B3B36" />
-          </div>
-          <h3>Estudio de crédito gratuito</h3>
-          <p>Analizamos tu perfil y encontramos la mejor opción para ti.</p>
-          <a href="#contacto" className="btn-comenzar-tarjeta">
-            Comenzar ahora <span>&rarr;</span>
-          </a>
-        </div>
       </div>
     </section>
   );
