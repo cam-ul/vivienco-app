@@ -1,11 +1,15 @@
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import SeccionesInicio from './components/SeccionesInicio';
+
 function App() {
   return (
     <div>
-      <h1 style={{ color: 'var(--verde-vivienco)', padding: '2rem' }}>
-        Vivienco - Inicializado correctamente
-      </h1>
+      <Navbar />
+      <Hero />
+      <SeccionesInicio />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

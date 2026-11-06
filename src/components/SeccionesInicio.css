@@ -1,0 +1,453 @@
+:root {
+  --verde-vivienco: #0B3B36;
+  --verde-oscuro: #062C29;
+  --dorado-vivienco: #C9A24A;
+  --dorado-claro: #E8D39A;
+  --blanco: #FFFFFF;
+  --fondo: #F7F8F6;
+  --texto: #172033;
+  --texto-secundario: #64748B;
+  --borde-suave: #E5E7EB;
+}
+
+.secciones-inicio {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  padding-top: 18px;
+}
+
+.secciones-contenedor {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 44px;
+}
+
+.secciones-inicio h2,
+.secciones-inicio h3,
+.secciones-inicio p,
+.secciones-inicio ul,
+.secciones-inicio ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.titulo-bloque {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--texto);
+  margin-bottom: 14px;
+}
+
+/* ---------- Fila superior ---------- */
+.fila-superior {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 24px;
+  padding-bottom: 22px;
+}
+
+.bloque-servicios {
+  padding-left: 28px;
+}
+
+.bloque-pasos {
+  border-left: 1px solid var(--borde-suave);
+  padding-left: 32px;
+}
+
+/* Tarjetas de servicios */
+.rejilla-servicios {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.tarjeta-servicio {
+  background: var(--blanco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 12px;
+  padding: 22px 10px 18px;
+  text-align: center;
+  min-height: 166px;
+}
+
+.tarjeta-servicio__icono {
+  width: 36px;
+  height: 36px;
+  color: var(--texto);
+  margin-bottom: 14px;
+}
+
+.tarjeta-servicio__titulo {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.tarjeta-servicio__texto {
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+
+/* Línea de tiempo de pasos */
+.linea-pasos {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.paso {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Línea punteada que une un paso con el siguiente */
+.paso:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 25px;
+  left: calc(50% + 32px);
+  width: calc(100% - 64px + 6px);
+  border-top: 2px dotted #CBD5E1;
+}
+
+.paso__circulo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--verde-vivienco);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paso__numero {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--dorado-vivienco);
+  color: var(--verde-oscuro);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0 10px;
+}
+
+.paso__titulo {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+
+.paso__texto {
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+  max-width: 100px;
+}
+
+/* ---------- Fila media ---------- */
+.fila-media {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  background: #F1F2EE;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.bloque-bancos {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 18px 20px 18px 28px;
+}
+
+.titulo-bancos {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.7;
+  flex-shrink: 0;
+}
+
+.lista-bancos {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  flex: 1;
+}
+
+.recuadro-banco {
+  background: var(--blanco);
+  border-radius: 8px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Logos imitados con texto */
+.banco-avvillas { color: #D7192D; font-style: italic; font-size: 14px; font-weight: 800; }
+.banco-bancolombia { color: #172033; font-size: 12px; }
+.banco-bogota { color: #1B4B9B; font-size: 10px; }
+.banco-occidente { color: #0A5CA8; font-size: 10px; font-weight: 600; }
+.banco-itau {
+  color: #1F4FA3;
+  font-size: 17px;
+  font-weight: 800;
+  background: #F58220;
+  border: 3px solid #1F4FA3;
+  width: 42px;
+  height: 42px;
+  margin: 5px auto;
+  border-radius: 8px;
+  padding: 0;
+}
+.banco-credifamilia { color: #1C3A5E; font-size: 11px; }
+.banco-cajasocial { color: #0B6EB5; font-size: 9px; }
+
+/* Bloque "Aprende con Vivienco" */
+.bloque-aprende {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 26px 14px 24px;
+}
+
+.aprende-titulo {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.aprende-descripcion {
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--texto-secundario);
+  margin-bottom: 8px;
+}
+
+.aprende-enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.aprende-enlace:hover {
+  color: var(--verde-vivienco);
+  text-decoration: underline;
+}
+
+.aprende-ilustracion {
+  width: 170px;
+  flex-shrink: 0;
+}
+
+/* ---------- Barra inferior de valores ---------- */
+.barra-valores {
+  max-width: 1352px;
+  margin: 8px auto 0;
+  background: var(--verde-vivienco);
+  border-radius: 18px 18px 0 0;
+  padding: 24px 28px;
+  color: var(--blanco);
+}
+
+.barra-valores__lista {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.valor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 22px;
+}
+
+.valor + .valor {
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.valor__icono {
+  flex-shrink: 0;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--dorado-vivienco);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.valor__titulo {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.valor__texto {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ---------- Burbuja flotante ---------- */
+.burbuja-ayuda {
+  position: fixed;
+  right: 26px;
+  bottom: 18px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--blanco);
+  border: none;
+  border-radius: 14px;
+  padding: 6px 8px 6px 18px;
+  box-shadow: 0 6px 22px rgba(6, 44, 41, 0.2);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.burbuja-ayuda__texto {
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--texto);
+  max-width: 130px;
+  text-align: left;
+}
+
+.burbuja-ayuda__boton {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--verde-vivienco);
+  color: var(--blanco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.burbuja-ayuda:hover .burbuja-ayuda__boton {
+  background: var(--verde-oscuro);
+}
+
+.burbuja-ayuda__punto {
+  position: absolute;
+  top: -8px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #E11D2E;
+  color: var(--blanco);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.burbuja-ayuda:focus-visible {
+  outline: 3px solid var(--dorado-vivienco);
+  outline-offset: 3px;
+}
+
+/* ---------- Adaptación a pantallas menores ---------- */
+@media (max-width: 1200px) {
+  .fila-superior,
+  .fila-media {
+    grid-template-columns: 1fr;
+  }
+
+  .bloque-servicios {
+    padding-left: 0;
+  }
+
+  .bloque-pasos {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .barra-valores__lista {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 22px;
+  }
+
+  .valor:nth-child(3) {
+    border-left: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .secciones-contenedor {
+    padding: 0 16px;
+  }
+
+  .rejilla-servicios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .linea-pasos {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .paso:not(:last-child)::after {
+    display: none;
+  }
+
+  .bloque-bancos {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lista-bancos {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+
+  .bloque-aprende {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .barra-valores__lista {
+    grid-template-columns: 1fr;
+  }
+
+  .valor + .valor {
+    border-left: none;
+  }
+
+  .burbuja-ayuda__texto {
+    display: none;
+  }
+}
