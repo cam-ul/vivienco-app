@@ -103,12 +103,14 @@
   align-items: center;
 }
 
+/* Ajuste específico para que la mancha verde no dañe el diseño */
 .mancha-verde-fondo {
   position: absolute;
-  top: -15%;
+  top: 50%;
+  transform: translateY(-50%);
   left: 2%;
   width: 110%;
-  height: 130%;
+  height: 420px; 
   background-color: var(--verde-vivienco);
   border-radius: 55% 0 0 50% / 60% 0 0 50%;
   z-index: 1;
@@ -123,68 +125,11 @@
   z-index: 2;
 }
 
-.tarjeta-estudio-flotante {
-  position: absolute;
-  bottom: 18px;
-  right: 5%;
-  width: 285px;
-  background-color: var(--blanco);
-  padding: 1.5rem;
-  border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
-  z-index: 3;
-}
-
-.icono-estudio-circulo {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background-color: #DCE7E5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.9rem;
-}
-
-.tarjeta-estudio-flotante h3 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--texto);
-  margin-bottom: 0.4rem;
-}
-
-.tarjeta-estudio-flotante p {
-  font-size: 0.82rem;
-  color: var(--texto-secundario);
-  line-height: 1.45;
-  margin-bottom: 1.1rem;
-}
-
-.btn-comenzar-tarjeta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--verde-vivienco);
-  color: var(--blanco);
-  padding: 0.65rem 1.25rem;
-  border-radius: 50px;
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
 @media (max-width: 1024px) {
   .hero-seccion {
     grid-template-columns: 1fr;
   }
   .hero-beneficios {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .tarjeta-estudio-flotante {
-    position: relative;
-    bottom: 0;
-    right: 0;
-    margin: -40px auto 0 auto;
   }
 }
