@@ -1,0 +1,181 @@
+.ia-contenedor {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1800;
+    font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.ia-boton-flotante {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--blanco);
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 10px 14px 10px 20px;
+    box-shadow: 0 10px 30px rgba(6, 44, 41, 0.18);
+    cursor: pointer;
+}
+
+.ia-texto-flotante {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--texto);
+    text-align: left;
+    max-width: 130px;
+    line-height: 1.25;
+}
+
+.ia-icono-circulo {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--verde-vivienco);
+    color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ia-notificacion {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ia-ventana {
+    width: 350px;
+    height: 460px;
+    background: var(--blanco);
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(6, 44, 41, 0.22);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 14px;
+}
+
+.ia-encabezado {
+    background: var(--verde-vivienco);
+    color: var(--blanco);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ia-titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ia-titulo h4 {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.ia-titulo span {
+    font-size: 0.75rem;
+    color: var(--dorado-claro);
+}
+
+.ia-cerrar {
+    background: transparent;
+    border: none;
+    color: var(--blanco);
+    cursor: pointer;
+}
+
+.ia-mensajes {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--fondo);
+}
+
+.ia-burbuja {
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    max-width: 85%;
+}
+
+.ia-burbuja--ia {
+    background: var(--blanco);
+    color: var(--texto);
+    border: 1px solid #e5e7eb;
+    align-self: flex-start;
+}
+
+.ia-burbuja--usuario {
+    background: var(--verde-vivienco);
+    color: var(--blanco);
+    align-self: flex-end;
+}
+
+.ia-sugerencias {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--fondo);
+    overflow-x: auto;
+}
+
+.ia-sugerencias button {
+    white-space: nowrap;
+    font-size: 0.75rem;
+    background: var(--dorado-claro);
+    color: var(--verde-oscuro);
+    border: none;
+    border-radius: 999px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.ia-formulario {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e5e7eb;
+    background: var(--blanco);
+    gap: 8px;
+}
+
+.ia-formulario input {
+    flex: 1;
+    border: 1px solid #d5d9de;
+    border-radius: 999px;
+    padding: 9px 14px;
+    font-size: 0.88rem;
+}
+
+.ia-formulario button {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: var(--verde-vivienco);
+    color: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

@@ -5,6 +5,7 @@ import SeccionesInicio from './components/SeccionesInicio';
 import SeccionesContenido from './components/SeccionesContenido';
 import Contacto from './components/Contacto';
 import PanelAdmin from './components/PanelAdmin';
+import AsistenteIA from './components/AsistenteIA';
 
 function App() {
   const [mostrarAdmin, setMostrarAdmin] = useState(false);
@@ -16,6 +17,9 @@ function App() {
       <SeccionesInicio />
       <SeccionesContenido />
       <Contacto />
+      {mostrarAdmin && <PanelAdmin cerrarPanel={() => setMostrarAdmin(false)} />}
+      <Contacto />
+      <AsistenteIA />
       {mostrarAdmin && <PanelAdmin cerrarPanel={() => setMostrarAdmin(false)} />}
     </div>
   );
