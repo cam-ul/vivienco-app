@@ -14,12 +14,24 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Ruta de prueba
 app.get("/", (req, res) => {
     res.json({ mensaje: "API de Vivienco funcionando correctamente" });
 });
 
-// Crear nueva solicitud de crédito (POST)
+app.use(
+    cors({
+        origin: "*",
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type"],
+    })
+);
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.json({ mensaje: "API de Vivienco funcionando correctamente" });
+});
+
+// 1. Crear nueva solicitud (POST)
 app.post("/api/solicitudes", async (req, res) => {
     try {
         const nuevaSolicitud = new SolicitudCredito(req.body);
@@ -36,7 +48,7 @@ app.post("/api/solicitudes", async (req, res) => {
     }
 });
 
-// Obtener todas las solicitudes para el Panel Admin (GET)
+// 2. Obtener todas las solicitudes para el Panel Admin (GET)
 app.get("/api/solicitudes", async (req, res) => {
     try {
         const solicitudes = await SolicitudCredito.find().sort({ fechaRegistro: -1 });
@@ -52,6 +64,37 @@ app.get("/api/solicitudes", async (req, res) => {
     }
 });
 
+// 3. Actualizar la etapa de una solicitud desde el Panel Admin (PUT y POST)
+const actualizarEtapaSolicitud = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { etapaProceso } = req.body;
+
+        const solicitudActualizada = await SolicitudCredito.findByIdAndUpdate(
+            id,
+            { $set: { etapaProceso } },
+            { new: true }
+        );
+
+        console.log("✅ Etapa actualizada en MongoDB Atlas:", solicitudActualizada?.etapaProceso);
+
+        res.status(200).json({
+            mensaje: "Etapa actualizada correctamente",
+            solicitud: solicitudActualizada,
+        });
+    } catch (error) {
+        console.error("❌ Error al actualizar etapa:", error.message);
+        res.status(400).json({
+            mensaje: "Error al actualizar la etapa",
+            detalle: error.message,
+        });
+    }
+};
+
+app.put("/api/solicitudes/:id", actualizarEtapaSolicitud);
+app.post("/api/solicitudes/:id/etapa", actualizarEtapaSolicitud);
+
+// 4. Asistente Virtual con IA (POST)
 app.post("/api/asistente", async (req, res) => {
     try {
         const { mensaje, historial = [] } = req.body;
@@ -62,20 +105,9 @@ app.post("/api/asistente", async (req, res) => {
                 .map((m) => `${m.emisor === "usuario" ? "Cliente" : "Asesor Vivienco"}: ${m.texto}`)
                 .join("\n");
 
-            const promptSistema = `Eres el Asistente con IA experto de Vivienco, bróker de crédito hipotecario y leasing habitacional en Colombia.
-Responde en español, en máximo 3 o 4 oraciones claras, precisas y amables.
-Datos oficiales de Vivienco:
-- Bancos aliados y tasas E.A.: Bancolombia (10.5%), Banco Caja Social (10.9%), Banco de Bogotá (11.2%), AV Villas (11.5%), Banco de Occidente (11.8%), Itaú (12.1%), Credifamilia (13.2%).
-- ¿Quiénes aplican?: Mayores de 18 hasta 72 años, empleados, independientes, pensionados y colombianos en el exterior. Se pueden unir ingresos familiares.
-- Financiación: Hasta 80% en VIS y 70% en No VIS (hasta 85% en leasing habitacional). Plazos de 5 a 30 años. Cuota máxima: 30% a 40% de los ingresos.
-- Subsidios 2026 (SMMLV $1.750.905): Cajas de compensación hasta 30 SMMLV, Subsidio Concurrente hasta 50 SMMLV. Topes: VIP 90 SMMLV, VIS 135-150 SMMLV.
-- Servicio de Vivienco: 100% gratuito para el cliente.
-Historial reciente:
-${contextoConversacion}
-Pregunta actual del cliente: ${mensaje}`;
+            const promptSistema = `Eres el Asistente con IA experto de Vivienco, bróker de crédito hipotecario y leasing habitacional en Colombia. Responde en español, en máximo 3 o 4 oraciones claras y amables. Bancos aliados: Bancolombia (10.5%), Caja Social (10.9%), Bogotá (11.2%), AV Villas (11.5%), Occidente (11.8%), Itaú (12.1%), Credifamilia (13.2%). Financiación hasta 80% VIS y 70% No VIS. Servicio 100% gratuito. Historial:\n${contextoConversacion}\nPregunta: ${mensaje}`;
 
             const modelos = ["gemini-2.5-flash", "gemini-2.0-flash"];
-
             for (const modelo of modelos) {
                 const respuestaIA = await fetch(
                     `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${apiKey}`,
@@ -97,10 +129,8 @@ Pregunta actual del cliente: ${mensaje}`;
                 }
             }
         }
-
         return res.status(200).json({ respuesta: null });
     } catch (error) {
-        console.error("Aviso en asistente IA:", error.message);
         return res.status(200).json({ respuesta: null });
     }
 });

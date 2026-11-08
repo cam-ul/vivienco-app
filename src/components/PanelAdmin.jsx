@@ -2,6 +2,15 @@ import { useState, useEffect } from "react";
 import { X, Lock, RefreshCw } from "lucide-react";
 import "./PanelAdmin.css";
 
+const ETAPAS_CREDITO = [
+    "1. Estudio de crédito",
+    "2. Recolección de documentos",
+    "3. Radicado en banco",
+    "4. Crédito aprobado",
+    "5. Avalúo y estudio de títulos",
+    "6. Desembolsado",
+];
+
 function PanelAdmin({ cerrarPanel }) {
     const [autenticado, setAutenticado] = useState(false);
     const [correo, setCorreo] = useState("");
@@ -9,9 +18,12 @@ function PanelAdmin({ cerrarPanel }) {
     const [errorLogin, setErrorLogin] = useState("");
 
     const [solicitudes, setSolicitudes] = useState([]);
-    const [cargando, setCargando] = useState(false);
+    const [cargando, setCargando] = appliedUseState(false);
 
-    // Función que consulta las solicitudes reales en MongoDB Atlas
+    function appliedUseState(val) {
+        return useState(val);
+    }
+
     const obtenerSolicitudes = async () => {
         setCargando(true);
         try {
@@ -27,6 +39,31 @@ function PanelAdmin({ cerrarPanel }) {
         }
     };
 
+    const cambiarEtapa = async (id, nuevaEtapa) => {
+        setSolicitudes((anteriores) =>
+            anteriores.map((item) =>
+                item._id === id ? { ...item, etapaProceso: nuevaEtapa } : item
+            )
+        );
+
+        try {
+            let respuesta = await fetch(`http://localhost:5000/api/solicitudes/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ etapaProceso: nuevaEtapa }),
+            });
+
+            if (!respuesta.ok) {
+                respuesta = await fetch(`http://localhost:5000/api/solicitudes/${id}/etapa`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ etapaProceso: nuevaEtapa }),
+                });
+            }
+        } catch (error) {
+            console.error("Error al conectar con el backend:", error);
+        }
+    };
     useEffect(() => {
         if (autenticado) {
             obtenerSolicitudes();
@@ -67,7 +104,7 @@ function PanelAdmin({ cerrarPanel }) {
                             <Lock size={28} />
                         </div>
                         <h3>Acceso para Especialistas</h3>
-                        <p>Ingresa tus credenciales para consultar los estudios de crédito.</p>
+                        <p>Ingresa tus credenciales para gestionar los estudios de crédito.</p>
 
                         <label>
                             <span>Correo corporativo</span>
@@ -122,7 +159,7 @@ function PanelAdmin({ cerrarPanel }) {
                                             <th>Ingresos</th>
                                             <th>Valor Vivienda</th>
                                             <th>Banco Interés</th>
-                                            <th>Etapa</th>
+                                            <th>Etapa del Proceso</th>
                                             <th>Fecha</th>
                                         </tr>
                                     </thead>
@@ -139,7 +176,17 @@ function PanelAdmin({ cerrarPanel }) {
                                                 <td>{formatearMoneda(item.valorVivienda)}</td>
                                                 <td>{item.bancoInteres || "Por definir"}</td>
                                                 <td>
-                                                    <span className="admin-badge">{item.etapaProceso}</span>
+                                                    <select
+                                                        className="admin-badge"
+                                                        value={item.etapaProceso}
+                                                        onChange={(e) => cambiarEtapa(item._id, e.target.value)}
+                                                    >
+                                                        {ETAPAS_CREDITO.map((etapa) => (
+                                                            <option key={etapa} value={etapa}>
+                                                                {etapa}
+                                                            </option>
+                                                        ))}
+                                                    </select>
                                                 </td>
                                                 <td>
                                                     {new Date(item.fechaRegistro).toLocaleDateString("es-CO")}
