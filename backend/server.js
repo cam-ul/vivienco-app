@@ -1,3 +1,9 @@
+const dns = require("dns");
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
+if (dns.setDefaultResultOrder) {
+    dns.setDefaultResultOrder("ipv4first");
+}
+
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -11,13 +17,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
-app.use(express.json());
-
-app.get("/", (req, res) => {
-    res.json({ mensaje: "API de Vivienco funcionando correctamente" });
-});
-
 app.use(
     cors({
         origin: "*",
@@ -27,18 +26,77 @@ app.use(
 );
 app.use(express.json());
 
+// Respaldo automático en memoria si la red bloquea MongoDB Atlas
+let mongoConectado = false;
+let solicitudesRespaldo = [
+    {
+        _id: "local-1",
+        nombreCompleto: "Arcelia Paez",
+        correo: "pkmyla@gmail.com",
+        telefono: "3003398593",
+        ingresosMensuales: 2000000,
+        valorVivienda: 200000000,
+        bancoInteres: "Comparar todos los bancos aliados",
+        etapaProceso: "1. Estudio de crédito",
+        fechaRegistro: new Date(),
+    },
+    {
+        _id: "local-2",
+        nombreCompleto: "Camila Paez",
+        correo: "ptolozacamil@gmail.com",
+        telefono: "3003398593",
+        ingresosMensuales: 1000000,
+        valorVivienda: 150000000,
+        bancoInteres: "Bancolombia",
+        etapaProceso: "1. Estudio de crédito",
+        fechaRegistro: new Date(),
+    },
+];
+
 app.get("/", (req, res) => {
-    res.json({ mensaje: "API de Vivienco funcionando correctamente" });
+    res.json({
+        mensaje: "API de Vivienco funcionando correctamente",
+        baseDeDatos: mongoConectado ? "MongoDB Atlas" : "Respaldo Local Activo",
+    });
 });
 
-// 1. Crear nueva solicitud (POST)
+// 1. Validar credenciales del administrador en el servidor (POST)
+app.post("/api/admin/login", (req, res) => {
+    const { correo, password } = req.body;
+    const usuarioValido = process.env.ADMIN_USER || "admin@vivienco.com";
+    const claveValida = process.env.ADMIN_PASS || "vivienco2026";
+
+    if (correo === usuarioValido && password === claveValida) {
+        return res.status(200).json({ autenticado: true });
+    }
+    return res.status(401).json({
+        autenticado: false,
+        mensaje: "Credenciales incorrectas",
+    });
+});
+
+// 2. Crear nueva solicitud (POST)
 app.post("/api/solicitudes", async (req, res) => {
     try {
-        const nuevaSolicitud = new SolicitudCredito(req.body);
-        const solicitudGuardada = await nuevaSolicitud.save();
-        res.status(201).json({
+        if (mongoConectado) {
+            const nuevaSolicitud = new SolicitudCredito(req.body);
+            const solicitudGuardada = await nuevaSolicitud.save();
+            return res.status(201).json({
+                mensaje: "Solicitud de crédito registrada con éxito",
+                solicitud: solicitudGuardada,
+            });
+        }
+
+        const nuevaLocal = {
+            _id: `local-${Date.now()}`,
+            ...req.body,
+            etapaProceso: req.body.etapaProceso || "1. Estudio de crédito",
+            fechaRegistro: new Date(),
+        };
+        solicitudesRespaldo.unshift(nuevaLocal);
+        return res.status(201).json({
             mensaje: "Solicitud de crédito registrada con éxito",
-            solicitud: solicitudGuardada,
+            solicitud: nuevaLocal,
         });
     } catch (error) {
         res.status(400).json({
@@ -48,13 +106,20 @@ app.post("/api/solicitudes", async (req, res) => {
     }
 });
 
-// 2. Obtener todas las solicitudes para el Panel Admin (GET)
+// 3. Obtener todas las solicitudes para el Panel Admin (GET)
 app.get("/api/solicitudes", async (req, res) => {
     try {
-        const solicitudes = await SolicitudCredito.find().sort({ fechaRegistro: -1 });
-        res.status(200).json({
-            total: solicitudes.length,
-            solicitudes,
+        if (mongoConectado) {
+            const solicitudes = await SolicitudCredito.find().sort({ fechaRegistro: -1 });
+            return res.status(200).json({
+                total: solicitudes.length,
+                solicitudes,
+            });
+        }
+
+        return res.status(200).json({
+            total: solicitudesRespaldo.length,
+            solicitudes: solicitudesRespaldo,
         });
     } catch (error) {
         res.status(500).json({
@@ -64,26 +129,34 @@ app.get("/api/solicitudes", async (req, res) => {
     }
 });
 
-// 3. Actualizar la etapa de una solicitud desde el Panel Admin (PUT y POST)
+// 4. Actualizar la etapa de una solicitud desde el Panel Admin (PUT y POST)
 const actualizarEtapaSolicitud = async (req, res) => {
     try {
         const { id } = req.params;
         const { etapaProceso } = req.body;
 
-        const solicitudActualizada = await SolicitudCredito.findByIdAndUpdate(
-            id,
-            { $set: { etapaProceso } },
-            { new: true }
+        if (mongoConectado && !String(id).startsWith("local-")) {
+            const solicitudActualizada = await SolicitudCredito.findByIdAndUpdate(
+                id,
+                { $set: { etapaProceso } },
+                { new: true }
+            );
+            return res.status(200).json({
+                mensaje: "Etapa actualizada correctamente",
+                solicitud: solicitudActualizada,
+            });
+        }
+
+        solicitudesRespaldo = solicitudesRespaldo.map((item) =>
+            item._id === id ? { ...item, etapaProceso } : item
         );
+        const encontrada = solicitudesRespaldo.find((item) => item._id === id);
 
-        console.log("✅ Etapa actualizada en MongoDB Atlas:", solicitudActualizada?.etapaProceso);
-
-        res.status(200).json({
+        return res.status(200).json({
             mensaje: "Etapa actualizada correctamente",
-            solicitud: solicitudActualizada,
+            solicitud: encontrada,
         });
     } catch (error) {
-        console.error("❌ Error al actualizar etapa:", error.message);
         res.status(400).json({
             mensaje: "Error al actualizar la etapa",
             detalle: error.message,
@@ -94,7 +167,7 @@ const actualizarEtapaSolicitud = async (req, res) => {
 app.put("/api/solicitudes/:id", actualizarEtapaSolicitud);
 app.post("/api/solicitudes/:id/etapa", actualizarEtapaSolicitud);
 
-// 4. Asistente Virtual con IA (POST)
+// 5. Asistente Virtual con IA (POST)
 app.post("/api/asistente", async (req, res) => {
     try {
         const { mensaje, historial = [] } = req.body;
@@ -135,18 +208,25 @@ app.post("/api/asistente", async (req, res) => {
     }
 });
 
+// Enciende Express primero y luego intenta conectar a MongoDB con family: 4
 const iniciarServidor = async () => {
+    app.listen(PORT, () => {
+        console.log(`✅ Servidor Vivienco activo en puerto ${PORT}`);
+    });
+
     try {
         if (!process.env.MONGO_URI) {
             throw new Error("Falta configurar MONGO_URI");
         }
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log("Conexión exitosa con MongoDB");
-        app.listen(PORT, () => {
-            console.log(`Servidor Vivienco activo en puerto ${PORT}`);
+        await mongoose.connect(process.env.MONGO_URI, {
+            family: 4,
+            serverSelectionTimeoutMS: 7000,
         });
+        mongoConectado = true;
+        console.log("✅ Conexión exitosa con MongoDB Atlas");
     } catch (error) {
-        console.error("Error al iniciar Vivienco:", error.message);
+        mongoConectado = false;
+        console.warn("⚠️ Red bloqueando MongoDB Atlas. Usando Respaldo Local Activo.");
     }
 };
 

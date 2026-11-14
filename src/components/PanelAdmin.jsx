@@ -18,11 +18,7 @@ function PanelAdmin({ cerrarPanel }) {
     const [errorLogin, setErrorLogin] = useState("");
 
     const [solicitudes, setSolicitudes] = useState([]);
-    const [cargando, setCargando] = appliedUseState(false);
-
-    function appliedUseState(val) {
-        return useState(val);
-    }
+    const [cargando, setCargando] = useState(false);
 
     const obtenerSolicitudes = async () => {
         setCargando(true);
@@ -64,19 +60,34 @@ function PanelAdmin({ cerrarPanel }) {
             console.error("Error al conectar con el backend:", error);
         }
     };
+
     useEffect(() => {
         if (autenticado) {
             obtenerSolicitudes();
         }
     }, [autenticado]);
 
-    const manejarLogin = (e) => {
+    const manejarLogin = async (e) => {
         e.preventDefault();
-        if (correo === "admin@vivienco.com" && password === "vivienco2026") {
-            setAutenticado(true);
-            setErrorLogin("");
-        } else {
-            setErrorLogin("Credenciales incorrectas. Usa admin@vivienco.com / vivienco2026");
+        setErrorLogin("");
+
+        try {
+            const respuesta = await fetch("http://localhost:5000/api/admin/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ correo, password }),
+            });
+
+            const datos = await respuesta.json();
+
+            if (respuesta.ok && datos.autenticado) {
+                setAutenticado(true);
+                setErrorLogin("");
+            } else {
+                setErrorLogin("Acceso denegado. Verifica tus credenciales.");
+            }
+        } catch (error) {
+            setErrorLogin("No se pudo conectar con el servidor de autenticación.");
         }
     };
 
@@ -107,12 +118,12 @@ function PanelAdmin({ cerrarPanel }) {
                         <p>Ingresa tus credenciales para gestionar los estudios de crédito.</p>
 
                         <label>
-                            <span>Correo corporativo</span>
+                            <span>Usuario o correo autorizado</span>
                             <input
                                 type="email"
                                 value={correo}
                                 onChange={(e) => setCorreo(e.target.value)}
-                                placeholder="admin@vivienco.com"
+                                placeholder="Ingresa tu usuario asignado"
                                 required
                             />
                         </label>
@@ -177,7 +188,7 @@ function PanelAdmin({ cerrarPanel }) {
                                                 <td>{item.bancoInteres || "Por definir"}</td>
                                                 <td>
                                                     <select
-                                                        className="admin-badge"
+                                                        className="admin-select-etapa"
                                                         value={item.etapaProceso}
                                                         onChange={(e) => cambiarEtapa(item._id, e.target.value)}
                                                     >
