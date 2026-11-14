@@ -27,11 +27,17 @@
 /* ---------- Estructura general de cada sección ---------- */
 .seccion-contenido {
   padding: 80px 24px;
-  scroll-margin-top: 90px; /* evita que el Navbar tape el título al hacer scroll */
+  scroll-margin-top: 90px;
+  /* evita que el Navbar tape el título al hacer scroll */
 }
 
-.seccion--blanca { background: var(--blanco); }
-.seccion--fondo { background: var(--fondo); }
+.seccion--blanca {
+  background: var(--blanco);
+}
+
+.seccion--fondo {
+  background: var(--fondo);
+}
 
 .seccion-contenido__interior {
   max-width: 1100px;
@@ -138,7 +144,9 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.plazos__boton:hover { border-color: var(--verde-vivienco); }
+.plazos__boton:hover {
+  border-color: var(--verde-vivienco);
+}
 
 .plazos__boton--activo {
   background: var(--verde-vivienco);
@@ -210,6 +218,21 @@
 .tarjeta-banco__nota {
   font-size: 0.8rem;
   color: var(--texto-secundario);
+  margin-bottom: 12px;
+}
+
+.tarjeta-banco__descripcion {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--texto);
+  margin-bottom: 8px;
+}
+
+.tarjeta-banco__detalles {
+  font-size: 0.78rem;
+  color: var(--texto-secundario);
+  border-top: 1px solid var(--borde-suave);
+  padding-top: 8px;
 }
 
 /* ---------- Educación ---------- */
@@ -303,10 +326,29 @@
   padding: 18px;
 }
 
-.tope__nombre { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; }
-.tope__valor { font-size: 1.4rem; font-weight: 700; color: var(--verde-vivienco); }
-.tope__pesos { font-size: 0.9rem; color: var(--texto); margin-bottom: 8px; }
-.tope__nota { font-size: 0.8rem; color: var(--texto-secundario); line-height: 1.4; }
+.tope__nombre {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.tope__valor {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--verde-vivienco);
+}
+
+.tope__pesos {
+  font-size: 0.9rem;
+  color: var(--texto);
+  margin-bottom: 8px;
+}
+
+.tope__nota {
+  font-size: 0.8rem;
+  color: var(--texto-secundario);
+  line-height: 1.4;
+}
 
 /* ---------- Blog ---------- */
 .articulo {
@@ -356,10 +398,13 @@
   transition: background 0.2s;
 }
 
-.articulo__boton:hover { background: var(--verde-oscuro); }
+.articulo__boton:hover {
+  background: var(--verde-oscuro);
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
+
   .rejilla-tres,
   .topes__lista {
     grid-template-columns: 1fr;
@@ -387,4 +432,84 @@
   .bloque-subsidio {
     padding: 24px 20px;
   }
+}
+
+/* Filtros de categorías y detalles de tarjetas */
+.filtros-categorias {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.filtro-btn {
+  background: #ffffff;
+  color: #0b3b36;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filtro-btn:hover {
+  border-color: #d4af37;
+}
+
+.filtro-btn--activo {
+  background: #0b3b36;
+  color: #ffffff;
+  border-color: #0b3b36;
+}
+
+.tarjeta-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.tiempo-lectura {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.estado-subsidio {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.lista-puntos-clave {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: #334155;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.lista-puntos-clave li {
+  margin-bottom: 6px;
+}
+
+.enlace-fuente {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #0b3b36;
+  text-decoration: none;
+}
+
+.enlace-fuente:hover {
+  text-decoration: underline;
 }

@@ -1,7 +1,7 @@
 import './Hero.css';
 import { UserCheck, ShieldCheck, Landmark, GraduationCap } from 'lucide-react';
 
-function Hero() {
+function Hero({ cambiarSeccion }) {
   return (
     <section className="hero-seccion" id="inicio">
       <div className="hero-izquierda">
@@ -15,12 +15,20 @@ function Hero() {
         </p>
 
         <div className="hero-cta-grupo">
-          <a href="#contacto" className="btn-verde-hero">
+          <button
+            type="button"
+            onClick={() => cambiarSeccion("contacto")}
+            className="btn-verde-hero"
+          >
             Solicita tu estudio gratis <span>&rarr;</span>
-          </a>
-          <a href="#servicios" className="btn-borde-hero">
+          </button>
+          <button
+            type="button"
+            onClick={() => cambiarSeccion("servicios")}
+            className="btn-borde-hero"
+          >
             Conoce nuestros servicios
-          </a>
+          </button>
         </div>
 
         <div className="hero-beneficios">

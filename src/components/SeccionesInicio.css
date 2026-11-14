@@ -1,26 +1,27 @@
 :root {
   --verde-vivienco: #0B3B36;
   --verde-oscuro: #062C29;
-  --dorado-vivienco: #C9A24A;
+  --dorado-vivienco: #D4AF37;
   --dorado-claro: #E8D39A;
   --blanco: #FFFFFF;
-  --fondo: #F7F8F6;
+  --fondo: #F8F6F0;
+  /* crema */
   --texto: #172033;
   --texto-secundario: #64748B;
-  --borde-suave: #E5E7EB;
+  --borde-suave: #E8E4D8;
 }
 
 .secciones-inicio {
   background: var(--fondo);
   color: var(--texto);
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  padding-top: 18px;
+  padding-top: 40px;
 }
 
 .secciones-contenedor {
-  max-width: 1440px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 44px;
+  padding: 0 40px;
 }
 
 .secciones-inicio h2,
@@ -34,245 +35,335 @@
 }
 
 .titulo-bloque {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--texto);
-  margin-bottom: 14px;
+  margin-bottom: 28px;
 }
 
-/* ---------- Fila superior ---------- */
-.fila-superior {
-  display: grid;
-  grid-template-columns: 1.55fr 1fr;
-  gap: 24px;
-  padding-bottom: 22px;
-}
-
-.bloque-servicios {
-  padding-left: 28px;
-}
-
-.bloque-pasos {
-  border-left: 1px solid var(--borde-suave);
-  padding-left: 32px;
-}
-
-/* Tarjetas de servicios */
-.rejilla-servicios {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 14px;
-}
-
-.tarjeta-servicio {
-  background: var(--blanco);
-  border: 1px solid var(--borde-suave);
-  border-radius: 12px;
-  padding: 22px 10px 18px;
+.titulo-bloque--centrado {
   text-align: center;
-  min-height: 166px;
+  font-size: 1.15rem;
+  letter-spacing: 0.14em;
 }
 
-.tarjeta-servicio__icono {
-  width: 36px;
-  height: 36px;
-  color: var(--texto);
-  margin-bottom: 14px;
+/* Pequeña línea dorada bajo el título de la línea de tiempo */
+.titulo-bloque--centrado::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 3px;
+  background: var(--dorado-vivienco);
+  border-radius: 3px;
+  margin: 12px auto 0;
 }
 
-.tarjeta-servicio__titulo {
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.25;
-  margin-bottom: 8px;
+/* ---------- 1. ¿Cómo te ayudamos? (100% del contenedor) ---------- */
+.bloque-pasos {
+  width: 100%;
+  margin-bottom: 40px;
+  box-sizing: border-box;
 }
 
-.tarjeta-servicio__texto {
-  font-size: 10px;
-  line-height: 1.4;
-  color: var(--texto-secundario);
-}
-
-/* Línea de tiempo de pasos */
 .linea-pasos {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Línea punteada dorada que pasa por detrás de los círculos */
+.linea-pasos::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  left: 10%;
+  right: 10%;
+  border-top: 2px dotted var(--dorado-vivienco);
+  z-index: 0;
 }
 
 .paso {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 }
 
-/* Línea punteada que une un paso con el siguiente */
-.paso:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  top: 25px;
-  left: calc(50% + 32px);
-  width: calc(100% - 64px + 6px);
-  border-top: 2px dotted #CBD5E1;
+.paso__marca {
+  position: relative;
+  flex-shrink: 0;
 }
 
 .paso__circulo {
-  width: 50px;
-  height: 50px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   background: var(--verde-vivienco);
   color: var(--blanco);
+  border: 5px solid var(--fondo);
+  /* corta la línea punteada alrededor del círculo */
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 6px 16px rgba(11, 59, 54, 0.25);
 }
 
 .paso__numero {
-  width: 16px;
-  height: 16px;
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: var(--dorado-vivienco);
   color: var(--verde-oscuro);
-  font-size: 10px;
+  border: 2px solid var(--fondo);
+  font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 12px 0 10px;
+}
+
+.paso__tarjeta {
+  width: 100%;
+  flex: 1;
+  margin-top: 18px;
+  background: var(--blanco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 14px;
+  padding: 22px 16px;
+  text-align: center;
+  box-sizing: border-box;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.paso:hover .paso__tarjeta {
+  transform: translateY(-5px);
+  border-color: var(--dorado-vivienco);
+  box-shadow: 0 12px 26px rgba(11, 59, 54, 0.1);
 }
 
 .paso__titulo {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
-  line-height: 1.25;
-  margin-bottom: 6px;
+  line-height: 1.3;
+  margin-bottom: 8px;
 }
 
 .paso__texto {
-  font-size: 10px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1.5;
   color: var(--texto-secundario);
-  max-width: 100px;
 }
 
-/* ---------- Fila media ---------- */
-.fila-media {
-  display: grid;
-  grid-template-columns: 1.55fr 1fr;
-  background: #F1F2EE;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
+/* ---------- 2. Carrusel infinito de bancos aliados ---------- */
 .bloque-bancos {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  padding: 18px 20px 18px 28px;
+  background: var(--blanco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 18px;
+  padding: 28px 0 30px;
+  margin-bottom: 28px;
+  overflow: hidden;
 }
 
 .titulo-bancos {
   font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  line-height: 1.7;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: center;
+  color: var(--texto);
+  margin-bottom: 22px;
+}
+
+.carrusel {
+  overflow: hidden;
+  /* Difumina los bordes para que los logos entren y salgan suavemente */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.carrusel__pista {
+  display: flex;
+  width: max-content;
+  animation: desplazar-bancos 36s linear infinite;
+}
+
+.carrusel:hover .carrusel__pista {
+  animation-play-state: paused;
+}
+
+/* El margen (y no el gap) permite que -50% sea exacto y el bucle no salte */
+.carrusel__item {
   flex-shrink: 0;
-}
-
-.lista-bancos {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 12px;
-  flex: 1;
-}
-
-.recuadro-banco {
-  background: var(--blanco);
-  border-radius: 8px;
-  height: 52px;
+  width: 190px;
+  height: 76px;
+  margin-right: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 0 4px;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.1;
+  padding: 10px 18px;
+  box-sizing: border-box;
+  background: var(--fondo);
+  border: 1px solid var(--borde-suave);
+  border-radius: 12px;
+  transition: transform 0.2s, border-color 0.2s;
 }
 
-/* Logos imitados con texto */
-.banco-avvillas { color: #D7192D; font-style: italic; font-size: 14px; font-weight: 800; }
-.banco-bancolombia { color: #172033; font-size: 12px; }
-.banco-bogota { color: #1B4B9B; font-size: 10px; }
-.banco-occidente { color: #0A5CA8; font-size: 10px; font-weight: 600; }
-.banco-itau {
-  color: #1F4FA3;
-  font-size: 17px;
+.carrusel__item:hover {
+  transform: translateY(-2px);
+  border-color: var(--dorado-vivienco);
+}
+
+@keyframes desplazar-bancos {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Respeta a quien prefiere menos movimiento: sin animación y con scroll manual */
+@media (prefers-reduced-motion: reduce) {
+  .carrusel {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .carrusel__pista {
+    animation: none;
+  }
+
+  .carrusel__item[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* Logo real */
+.logo-imagen {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Logo estilizado (se muestra si no existe el archivo en /logos/) */
+.logo-texto {
+  font-size: 15px;
   font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.logo-bancolombia {
+  color: #172033;
+}
+
+.logo-bogota {
+  color: #1B4B9B;
+  font-size: 14px;
+}
+
+.logo-cajasocial {
+  color: #0B6EB5;
+  font-size: 14px;
+}
+
+.logo-avvillas {
+  color: #D7192D;
+  font-style: italic;
+  font-size: 18px;
+}
+
+.logo-occidente {
+  color: #0A5CA8;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.logo-itau {
+  color: #1F4FA3;
   background: #F58220;
   border: 3px solid #1F4FA3;
-  width: 42px;
-  height: 42px;
-  margin: 5px auto;
   border-radius: 8px;
-  padding: 0;
+  padding: 8px 12px;
+  font-size: 18px;
 }
-.banco-credifamilia { color: #1C3A5E; font-size: 11px; }
-.banco-cajasocial { color: #0B6EB5; font-size: 9px; }
 
-/* Bloque "Aprende con Vivienco" */
+.logo-credifamilia {
+  color: #1C3A5E;
+}
+
+/* ---------- 3. Bloque "Aprende con Vivienco" ---------- */
 .bloque-aprende {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 14px 26px 14px 24px;
+  gap: 24px;
+  background: var(--blanco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 16px;
+  padding: 28px 36px;
+  margin-bottom: 32px;
+}
+
+.aprende-texto {
+  max-width: 640px;
 }
 
 .aprende-titulo {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   letter-spacing: 0.06em;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .aprende-descripcion {
-  font-size: 10.5px;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  line-height: 1.55;
   color: var(--texto-secundario);
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .aprende-enlace {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 10.5px;
+  gap: 6px;
+  font-family: inherit;
+  font-size: 0.92rem;
   font-weight: 600;
-  color: var(--texto);
+  color: var(--verde-vivienco);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   text-decoration: none;
 }
 
 .aprende-enlace:hover {
-  color: var(--verde-vivienco);
+  color: var(--verde-oscuro);
   text-decoration: underline;
 }
 
 .aprende-ilustracion {
-  width: 170px;
+  width: 180px;
   flex-shrink: 0;
 }
 
-/* ---------- Barra inferior de valores ---------- */
+/* ---------- 4. Barra inferior de valores ---------- */
 .barra-valores {
-  max-width: 1352px;
+  max-width: 1280px;
   margin: 8px auto 0;
   background: var(--verde-vivienco);
   border-radius: 18px 18px 0 0;
-  padding: 24px 28px;
+  padding: 26px 28px;
   color: var(--blanco);
 }
 
@@ -288,7 +379,7 @@
   padding: 0 22px;
 }
 
-.valor + .valor {
+.valor+.valor {
   border-left: 1px solid rgba(255, 255, 255, 0.18);
 }
 
@@ -316,84 +407,259 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* ---------- Burbuja flotante ---------- */
-.burbuja-ayuda {
-  position: fixed;
-  right: 26px;
-  bottom: 18px;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: var(--blanco);
-  border: none;
-  border-radius: 14px;
-  padding: 6px 8px 6px 18px;
-  box-shadow: 0 6px 22px rgba(6, 44, 41, 0.2);
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.burbuja-ayuda__texto {
-  font-size: 15px;
-  line-height: 1.25;
+/* ---------- 5. Tarjetas detalladas "Bancos Aliados" ---------- */
+.bancos-detalle {
+  background: var(--fondo);
   color: var(--texto);
-  max-width: 130px;
-  text-align: left;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  padding: 72px 24px;
 }
 
-.burbuja-ayuda__boton {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--verde-vivienco);
-  color: var(--blanco);
+.bancos-detalle h2,
+.bancos-detalle h3,
+.bancos-detalle p {
+  margin: 0;
+}
+
+.bancos-detalle__interior {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.bancos-detalle__encabezado {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 44px;
+}
+
+.bancos-detalle__titulo {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.bancos-detalle__subtitulo {
+  color: var(--texto-secundario);
+  line-height: 1.6;
+}
+
+.bancos-detalle__rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+.tarjeta-banco-detalle {
+  display: flex;
+  flex-direction: column;
+  background: var(--blanco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 18px;
+  padding: 24px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.tarjeta-banco-detalle:hover {
+  transform: translateY(-4px);
+  border-color: var(--dorado-vivienco);
+  box-shadow: 0 14px 30px rgba(11, 59, 54, 0.1);
+}
+
+.tarjeta-banco-detalle__logo {
+  height: 84px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--fondo);
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  margin-bottom: 18px;
+}
+
+.tarjeta-banco-detalle__nombre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.tarjeta-banco-detalle__tasa {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed var(--borde-suave);
+}
+
+.tarjeta-banco-detalle__tasa-valor {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--verde-vivienco);
+}
+
+.tarjeta-banco-detalle__tasa-etiqueta {
+  font-size: 0.75rem;
+  color: var(--texto-secundario);
+}
+
+.tarjeta-banco-detalle__financiacion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.financiacion-dato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(212, 175, 55, 0.12);
+  border-radius: 10px;
+  padding: 10px 6px;
+}
+
+.financiacion-dato__valor {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--verde-vivienco);
+}
+
+.financiacion-dato__texto {
+  font-size: 0.72rem;
+  color: var(--texto-secundario);
+}
+
+/* Descripción limitada a 2 líneas */
+.tarjeta-banco-detalle__descripcion {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--texto-secundario);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.7em;
+}
+
+.bancos-detalle__aviso {
+  max-width: 720px;
+  margin: 28px auto 0;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--texto-secundario);
+}
+
+/* ---------- Vista "NUESTROS SERVICIOS" (tarjetas amplias) ---------- */
+.secciones-contenedor--servicios {
+  padding-top: 32px;
+  padding-bottom: 64px;
+}
+
+.servicios-encabezado {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 40px;
+}
+
+.servicios-titulo {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px !important;
+}
+
+.servicios-subtitulo {
+  font-size: 1rem;
+  color: var(--texto-secundario);
+  line-height: 1.6;
+}
+
+.rejilla-servicios-amplia {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.tarjeta-servicio-amplia {
+  background: var(--blanco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 16px;
+  padding: 32px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.tarjeta-servicio-amplia:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(11, 59, 54, 0.08);
+  border-color: var(--dorado-vivienco);
+}
+
+.tarjeta-servicio-amplia__icono-caja {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: rgba(11, 59, 54, 0.08);
+  color: var(--verde-vivienco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.tarjeta-servicio-amplia__icono {
+  width: 28px;
+  height: 28px;
+}
+
+.tarjeta-servicio-amplia__titulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 10px !important;
+}
+
+.tarjeta-servicio-amplia__texto {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--texto-secundario);
+}
+
+.servicios-cta {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-servicios-contacto {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--verde-vivienco);
+  color: var(--blanco);
+  border: none;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: background 0.2s;
 }
 
-.burbuja-ayuda:hover .burbuja-ayuda__boton {
+.btn-servicios-contacto:hover {
   background: var(--verde-oscuro);
 }
 
-.burbuja-ayuda__punto {
-  position: absolute;
-  top: -8px;
-  right: -4px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #E11D2E;
-  color: var(--blanco);
-  font-size: 10px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.burbuja-ayuda:focus-visible {
-  outline: 3px solid var(--dorado-vivienco);
-  outline-offset: 3px;
-}
-
 /* ---------- Adaptación a pantallas menores ---------- */
-@media (max-width: 1200px) {
-  .fila-superior,
-  .fila-media {
-    grid-template-columns: 1fr;
-  }
-
-  .bloque-servicios {
-    padding-left: 0;
-  }
-
-  .bloque-pasos {
-    border-left: none;
-    padding-left: 0;
+@media (max-width: 1100px) {
+  .rejilla-servicios-amplia {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .barra-valores__lista {
@@ -406,48 +672,63 @@
   }
 }
 
+/* Línea de tiempo vertical en tablet y móvil */
+@media (max-width: 900px) {
+  .linea-pasos {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .linea-pasos::before {
+    top: 34px;
+    bottom: 34px;
+    left: 33px;
+    right: auto;
+    border-top: none;
+    border-left: 2px dotted var(--dorado-vivienco);
+  }
+
+  .paso {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .paso__tarjeta {
+    margin-top: 6px;
+    text-align: left;
+  }
+}
+
 @media (max-width: 760px) {
   .secciones-contenedor {
     padding: 0 16px;
   }
 
-  .rejilla-servicios {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .linea-pasos {
+  .rejilla-servicios-amplia {
     grid-template-columns: 1fr;
-    gap: 22px;
   }
 
-  .paso:not(:last-child)::after {
-    display: none;
-  }
-
-  .bloque-bancos {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .lista-bancos {
-    grid-template-columns: repeat(2, 1fr);
-    width: 100%;
+  .carrusel__item {
+    width: 150px;
+    height: 64px;
   }
 
   .bloque-aprende {
     flex-direction: column;
     align-items: flex-start;
+    padding: 24px 20px;
   }
 
   .barra-valores__lista {
     grid-template-columns: 1fr;
   }
 
-  .valor + .valor {
+  .valor+.valor {
     border-left: none;
   }
 
-  .burbuja-ayuda__texto {
-    display: none;
+  .bancos-detalle {
+    padding: 48px 16px;
   }
 }
