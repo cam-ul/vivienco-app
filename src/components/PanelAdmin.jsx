@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { X, Lock, RefreshCw } from "lucide-react";
 import "./PanelAdmin.css";
 
+// URL base del backend en producción o local
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 // Lista de etapas del trámite hipotecario para el panel
 const ETAPAS_CREDITO = [
     "1. Estudio de crédito",
@@ -25,7 +28,7 @@ function PanelAdmin({ cerrarPanel }) {
     const obtenerSolicitudes = async () => {
         setCargando(true);
         try {
-            const respuesta = await fetch("http://localhost:5000/api/solicitudes");
+            const respuesta = await fetch(`${API_URL}/api/solicitudes`);
             const datos = await respuesta.json();
             if (respuesta.ok) {
                 setSolicitudes(datos.solicitudes || []);
@@ -46,14 +49,14 @@ function PanelAdmin({ cerrarPanel }) {
         );
 
         try {
-            let respuesta = await fetch(`http://localhost:5000/api/solicitudes/${id}`, {
+            let respuesta = await fetch(`${API_URL}/api/solicitudes/${id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ etapaProceso: nuevaEtapa }),
             });
 
             if (!respuesta.ok) {
-                respuesta = await fetch(`http://localhost:5000/api/solicitudes/${id}/etapa`, {
+                respuesta = await fetch(`${API_URL}/api/solicitudes/${id}/etapa`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ etapaProceso: nuevaEtapa }),
@@ -75,7 +78,7 @@ function PanelAdmin({ cerrarPanel }) {
         setErrorLogin("");
 
         try {
-            const respuesta = await fetch("http://localhost:5000/api/admin/login", {
+            const respuesta = await fetch(`${API_URL}/api/admin/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ correo, password }),

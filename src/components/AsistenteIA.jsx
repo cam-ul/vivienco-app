@@ -2,6 +2,9 @@ import { useState } from "react";
 import { MessageCircle, X, Send, Sparkles } from "lucide-react";
 import "./AsistenteIA.css";
 
+// URL base del backend en producción o local
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const mensajesIniciales = [
     {
         emisor: "ia",
@@ -319,7 +322,7 @@ function AsistenteIA() {
         setEscribiendo(true);
 
         try {
-            const res = await fetch("http://localhost:5000/api/asistente", {
+            const res = await fetch(`${API_URL}/api/asistente`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

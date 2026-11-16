@@ -3,6 +3,9 @@ import { MessageCircle } from "lucide-react";
 import { bancosAliados, integrantesEquipo } from "../data/datosVivienco";
 import "./Contacto.css";
 
+// URL base del backend en producción o local
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const datosIniciales = {
   nombreCompleto: "",
   correo: "",
@@ -42,7 +45,7 @@ function Contacto() {
     setSolicitudEnviada(false);
 
     try {
-      const respuesta = await fetch("http://localhost:5000/api/solicitudes", {
+      const respuesta = await fetch(`${API_URL}/api/solicitudes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
