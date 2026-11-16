@@ -5,7 +5,6 @@
   --dorado-claro: #E8D39A;
   --blanco: #FFFFFF;
   --fondo: #F8F6F0;
-  /* crema */
   --texto: #172033;
   --texto-secundario: #64748B;
   --borde-suave: #E8E4D8;
@@ -48,7 +47,7 @@
   letter-spacing: 0.14em;
 }
 
-/* Pequeña línea dorada bajo el título de la línea de tiempo */
+/* Línea dorada debajo del título principal */
 .titulo-bloque--centrado::after {
   content: "";
   display: block;
@@ -59,7 +58,7 @@
   margin: 12px auto 0;
 }
 
-/* ---------- 1. ¿Cómo te ayudamos? (100% del contenedor) ---------- */
+/* Sección de pasos sobre cómo ayudamos al cliente */
 .bloque-pasos {
   width: 100%;
   margin-bottom: 40px;
@@ -74,7 +73,7 @@
   width: 100%;
 }
 
-/* Línea punteada dorada que pasa por detrás de los círculos */
+/* Línea punteada que conecta los círculos de cada paso */
 .linea-pasos::before {
   content: "";
   position: absolute;
@@ -105,7 +104,6 @@
   background: var(--verde-vivienco);
   color: var(--blanco);
   border: 5px solid var(--fondo);
-  /* corta la línea punteada alrededor del círculo */
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -162,7 +160,7 @@
   color: var(--texto-secundario);
 }
 
-/* ---------- 2. Carrusel infinito de bancos aliados ---------- */
+/* Animación para que el carrusel de bancos se mueva solo */
 .bloque-bancos {
   background: var(--blanco);
   border: 1px solid var(--borde-suave);
@@ -183,7 +181,6 @@
 
 .carrusel {
   overflow: hidden;
-  /* Difumina los bordes para que los logos entren y salgan suavemente */
   -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
@@ -198,7 +195,6 @@
   animation-play-state: paused;
 }
 
-/* El margen (y no el gap) permite que -50% sea exacto y el bucle no salte */
 .carrusel__item {
   flex-shrink: 0;
   width: 190px;
@@ -230,31 +226,14 @@
   }
 }
 
-/* Respeta a quien prefiere menos movimiento: sin animación y con scroll manual */
-@media (prefers-reduced-motion: reduce) {
-  .carrusel {
-    overflow-x: auto;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
 
-  .carrusel__pista {
-    animation: none;
-  }
-
-  .carrusel__item[aria-hidden="true"] {
-    display: none;
-  }
-}
-
-/* Logo real */
+/* Estilos de logos de bancos y texto de respaldo */
 .logo-imagen {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
-/* Logo estilizado (se muestra si no existe el archivo en /logos/) */
 .logo-texto {
   font-size: 15px;
   font-weight: 800;
@@ -288,20 +267,18 @@
   font-weight: 700;
 }
 
-.logo-itau {
-  color: #1F4FA3;
-  background: #F58220;
-  border: 3px solid #1F4FA3;
-  border-radius: 8px;
-  padding: 8px 12px;
+.logo-bbva {
+  color: #072146;
   font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
 .logo-credifamilia {
   color: #1C3A5E;
 }
 
-/* ---------- 3. Bloque "Aprende con Vivienco" ---------- */
+/* Tarjeta informativa para ir a educación financiera */
 .bloque-aprende {
   display: flex;
   align-items: center;
@@ -357,7 +334,7 @@
   flex-shrink: 0;
 }
 
-/* ---------- 4. Barra inferior de valores ---------- */
+/* Barra verde inferior con los valores de la marca */
 .barra-valores {
   max-width: 1280px;
   margin: 8px auto 0;
@@ -407,7 +384,7 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* ---------- 5. Tarjetas detalladas "Bancos Aliados" ---------- */
+/* Diseño de las tarjetas de bancos aliados y sus tasas */
 .bancos-detalle {
   background: var(--fondo);
   color: var(--texto);
@@ -531,15 +508,10 @@
   color: var(--texto-secundario);
 }
 
-/* Descripción limitada a 2 líneas */
 .tarjeta-banco-detalle__descripcion {
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--texto-secundario);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   min-height: 2.7em;
 }
 
@@ -552,7 +524,118 @@
   color: var(--texto-secundario);
 }
 
-/* ---------- Vista "NUESTROS SERVICIOS" (tarjetas amplias) ---------- */
+/* Sello de vigencia, selector de modalidad y rangos por banco */
+.sello-vigencia-tasas {
+  display: inline-block;
+  background: var(--dorado-claro);
+  color: var(--verde-oscuro);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.selector-modalidad-bancos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.selector-modalidad-btn {
+  background: var(--blanco);
+  color: var(--verde-vivienco);
+  border: 1px solid var(--borde-suave);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.selector-modalidad-btn:hover {
+  border-color: var(--dorado-vivienco);
+}
+
+.selector-modalidad-btn--activo {
+  background: var(--verde-vivienco);
+  color: var(--blanco);
+  border-color: var(--verde-vivienco);
+}
+
+.tarjeta-banco-detalle__rangos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px dashed var(--borde-suave);
+}
+
+.rango-tasa-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--fondo);
+  border: 1px solid var(--borde-suave);
+  border-radius: 10px;
+  padding: 8px 12px;
+}
+
+.rango-tasa-item--inactivo {
+  opacity: 0.68;
+}
+
+.rango-tasa-item__tipo {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rango-tasa-item__valor {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--verde-vivienco);
+}
+
+.rango-tasa-item--inactivo .rango-tasa-item__valor {
+  color: var(--texto-secundario);
+  font-weight: 500;
+}
+
+.aviso-legal-tasas {
+  margin-top: 32px;
+  background: var(--blanco);
+  border: 1px solid var(--borde-suave);
+  border-left: 4px solid var(--dorado-vivienco);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: left;
+}
+
+.aviso-legal-tasas__corto {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  margin-bottom: 6px !important;
+  letter-spacing: 0.03em;
+}
+
+.aviso-legal-tasas__texto {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--texto-secundario);
+}
+
+/* Estilos de la vista completa de servicios */
 .secciones-contenedor--servicios {
   padding-top: 32px;
   padding-bottom: 64px;
@@ -656,7 +739,7 @@
   background: var(--verde-oscuro);
 }
 
-/* ---------- Adaptación a pantallas menores ---------- */
+/* Ajustes para pantallas de celular y tablet */
 @media (max-width: 1100px) {
   .rejilla-servicios-amplia {
     grid-template-columns: repeat(2, 1fr);
@@ -672,7 +755,7 @@
   }
 }
 
-/* Línea de tiempo vertical en tablet y móvil */
+/* Pasos en formato vertical para pantallas medianas y móviles */
 @media (max-width: 900px) {
   .linea-pasos {
     grid-template-columns: 1fr;

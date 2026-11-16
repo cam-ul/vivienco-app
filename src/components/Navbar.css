@@ -1,3 +1,4 @@
+/* Estilos generales de la barra de navegación */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -22,6 +23,7 @@
   object-fit: contain;
   display: block;
 }
+
 .logo-titulo {
   font-size: 1.8rem;
   font-weight: 700;
@@ -101,7 +103,7 @@
   cursor: pointer;
 }
 
-/* Diseño Responsive para Celulares */
+/* Ajustes del menú para pantallas de celular y tablet */
 @media (max-width: 1024px) {
   .navbar-enlaces {
     display: none;
@@ -112,16 +114,60 @@
     width: 100%;
     background-color: var(--blanco);
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     text-align: center;
   }
+
   .navbar-enlaces.activo {
     display: flex;
   }
+
   .btn-solicitar {
-    display: none; /* Se oculta el botón largo en móviles por espacio */
+    display: none;
   }
+
   .btn-movil {
     display: block;
   }
+}
+
+/* Indicador inferior dorado para los enlaces del menú */
+.navbar-enlaces a {
+  position: relative;
+  padding-bottom: 8px;
+  transition: color 0.25s ease;
+}
+
+.navbar-enlaces a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px;
+  background: #D4AF37;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+.navbar-enlaces a:hover::after {
+  transform: scaleX(0.45);
+}
+
+/* Estilo de la pestaña activa */
+.navbar-enlaces a.enlace-activo {
+  color: #062C29;
+  font-weight: 700;
+}
+
+.navbar-enlaces a.enlace-activo::after {
+  transform: scaleX(1);
+}
+
+.navbar-enlaces a:focus-visible {
+  outline: 3px solid #D4AF37;
+  outline-offset: 4px;
+  border-radius: 4px;
 }

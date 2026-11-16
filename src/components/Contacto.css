@@ -26,7 +26,7 @@
   margin: 0;
 }
 
-/* ---------- Nuestro equipo ---------- */
+/* Sección de nuestro equipo de asesores */
 .equipo {
   max-width: 960px;
   width: 100%;
@@ -54,7 +54,7 @@
   text-align: center;
 }
 
-/* Cuadro gris que simula la foto */
+/* Contenedor temporal de la foto del asesor */
 .tarjeta-integrante__foto {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -74,7 +74,7 @@
   color: var(--texto-secundario);
 }
 
-/* ---------- Formulario ---------- */
+/* Estilos del formulario de estudio de crédito */
 .formulario-caja {
   max-width: 760px;
   width: 100%;
@@ -172,30 +172,7 @@
   padding: 10px 14px;
 }
 
-/* ---------- Footer ---------- */
-.pie-pagina {
-  background: var(--verde-oscuro);
-  color: var(--blanco);
-  font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  padding: 32px 24px;
-  text-align: center;
-}
-
-.pie-pagina__logo {
-  margin: 0 0 8px;
-  font-size: 1.4rem;
-  font-weight: 300;
-  letter-spacing: 0.35em;
-  padding-left: 0.35em;
-}
-
-.pie-pagina__derechos {
-  margin: 0;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* ---------- Responsive ---------- */
+/* Ajustes para pantallas de celular y tablet */
 @media (max-width: 760px) {
   .contacto {
     padding: 48px 16px;
@@ -282,4 +259,173 @@
   color: var(--texto-secundario);
   line-height: 1.55;
   margin-top: 10px;
+}
+
+/* Diseño de las tarjetas de asesores con foto y botón de WhatsApp */
+.tarjeta-integrante {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid #E8E4D8;
+  border-radius: 18px;
+  padding: 14px 14px 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.tarjeta-integrante:hover {
+  transform: translateY(-6px);
+  border-color: #D4AF37;
+  box-shadow: 0 18px 38px rgba(11, 59, 54, 0.14);
+}
+
+/* Marco para la foto de perfil del asesor */
+.tarjeta-integrante__foto-contenedor {
+  position: relative;
+  height: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #D9DDE1;
+  margin-bottom: 18px;
+}
+
+.tarjeta-integrante__foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  margin: 0;
+  border-radius: 0;
+  background: none;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s ease;
+}
+
+.tarjeta-integrante:hover .tarjeta-integrante__foto {
+  transform: scale(1.04);
+}
+
+/* Etiqueta dorada con los años de experiencia */
+.tarjeta-integrante__experiencia {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #E8D39A 0%, #D4AF37 100%);
+  color: #062C29;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(6, 44, 41, 0.28);
+}
+
+/* Nombre y cargo del especialista */
+.tarjeta-integrante__nombre {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #062C29;
+  margin-bottom: 2px;
+}
+
+.tarjeta-integrante__cargo {
+  font-size: 0.88rem;
+  color: #64748B;
+  margin-bottom: 16px;
+}
+
+/* Lista de puntos clave de cada asesor */
+.tarjeta-integrante__lista {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 14px 6px 0;
+  border-top: 1px dashed #E8E4D8;
+  text-align: left;
+  display: grid;
+  gap: 9px;
+}
+
+.tarjeta-integrante__lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: #334155;
+}
+
+.tarjeta-integrante__lista li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  background: #D4AF37;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Botón para abrir WhatsApp con el asesor */
+.tarjeta-integrante__whatsapp {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 12px 20px;
+  background: #0B3B36;
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto de brillo al pasar el cursor por el botón */
+.tarjeta-integrante__whatsapp::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.tarjeta-integrante__whatsapp:hover,
+.tarjeta-integrante__whatsapp:focus-visible {
+  background: #D4AF37;
+  color: #062C29;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(212, 175, 55, 0.4);
+}
+
+.tarjeta-integrante__whatsapp:hover::after {
+  left: 130%;
+}
+
+.tarjeta-integrante__whatsapp:focus-visible {
+  outline: 3px solid #062C29;
+  outline-offset: 3px;
+}
+
+.tarjeta-integrante__whatsapp svg {
+  transition: transform 0.3s ease;
+}
+
+.tarjeta-integrante__whatsapp:hover svg {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+/* Ajuste de altura de foto en celulares */
+@media (max-width: 760px) {
+  .tarjeta-integrante__foto-contenedor {
+    height: 320px;
+  }
 }

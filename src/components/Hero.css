@@ -1,3 +1,4 @@
+/* Contenedor principal del banner de inicio */
 .hero-seccion {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -100,7 +101,7 @@
   color: var(--texto);
 }
 
-/* --- COLUMNA DERECHA --- */
+/* Columna de la imagen principal y fondo decorativo */
 .hero-derecha {
   position: relative;
   display: flex;
@@ -108,7 +109,7 @@
   align-items: center;
 }
 
-/* Ajuste específico para que la mancha verde no dañe el diseño */
+/* Fondo curvo verde detrás de la foto */
 .mancha-verde-fondo {
   position: absolute;
   top: 50%;
@@ -130,6 +131,7 @@
   z-index: 2;
 }
 
+/* Ajustes para pantallas de tablet y celular */
 @media (max-width: 1024px) {
   .hero-seccion {
     grid-template-columns: 1fr;

@@ -24,11 +24,10 @@
   list-style: none;
 }
 
-/* ---------- Estructura general de cada sección ---------- */
+/* Contenedor base de las secciones de contenido */
 .seccion-contenido {
   padding: 80px 24px;
   scroll-margin-top: 90px;
-  /* evita que el Navbar tape el título al hacer scroll */
 }
 
 .seccion--blanca {
@@ -86,7 +85,7 @@
   align-items: start;
 }
 
-/* ---------- Simulador ---------- */
+/* Controles del simulador de cuotas */
 .simulador {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -235,7 +234,7 @@
   padding-top: 8px;
 }
 
-/* ---------- Educación ---------- */
+/* Diseño de las tarjetas de educación financiera */
 .tarjeta-educacion {
   background: var(--blanco);
   border: 1px solid var(--borde-suave);
@@ -266,7 +265,7 @@
   font-weight: 500;
 }
 
-/* ---------- Subsidios ---------- */
+/* Diseño de las tarjetas de subsidios */
 .rejilla-subsidios {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -350,7 +349,7 @@
   line-height: 1.4;
 }
 
-/* ---------- Blog ---------- */
+/* Diseño de los artículos del blog */
 .articulo {
   background: var(--blanco);
   border: 1px solid var(--borde-suave);
@@ -402,7 +401,7 @@
   background: var(--verde-oscuro);
 }
 
-/* ---------- Responsive ---------- */
+/* Ajustes para pantallas de celular y tablet */
 @media (max-width: 960px) {
 
   .rejilla-tres,
@@ -512,4 +511,571 @@
 
 .enlace-fuente:hover {
   text-decoration: underline;
+}
+
+/* Estilos para el modal de guías y tarjetas interactivas */
+.tarjeta-interactiva {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tarjeta-interactiva:hover {
+  transform: translateY(-4px);
+  border-color: var(--dorado-vivienco);
+  box-shadow: 0 12px 26px rgba(11, 59, 54, 0.1);
+}
+
+.modal-guia-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(6, 44, 41, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-guia-caja {
+  position: relative;
+  background: var(--blanco);
+  color: var(--texto);
+  max-width: 680px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 24px 60px rgba(6, 44, 41, 0.3);
+  border: 1px solid var(--borde-suave);
+}
+
+.modal-guia-cerrar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--borde-suave);
+  background: var(--fondo);
+  color: var(--texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.modal-guia-cerrar:hover {
+  background: var(--verde-vivienco);
+  color: var(--blanco);
+}
+
+.modal-guia-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding-right: 40px;
+}
+
+.modal-guia-encabezado .etiqueta {
+  margin-bottom: 0;
+}
+
+.modal-guia-tiempo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  color: var(--texto-secundario);
+  font-weight: 500;
+}
+
+.modal-guia-titulo {
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 12px !important;
+}
+
+.modal-guia-descripcion {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--texto-secundario);
+  margin-bottom: 20px !important;
+}
+
+.modal-guia-bloque {
+  background: var(--fondo);
+  border: 1px solid var(--borde-suave);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+
+.modal-guia-subtitulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--verde-vivienco);
+  margin: 0 0 10px 0;
+}
+
+.modal-guia-parrafo {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--texto);
+  margin-bottom: 10px !important;
+}
+
+.modal-guia-parrafo:last-child {
+  margin-bottom: 0 !important;
+}
+
+.modal-guia-lista {
+  padding-left: 20px !important;
+  list-style: disc !important;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--texto);
+}
+
+.modal-guia-lista li {
+  margin-bottom: 6px;
+}
+
+.modal-guia-ejemplo {
+  background: #fffdf5;
+  border: 1px solid var(--dorado-claro);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.modal-guia-ejemplo strong {
+  display: block;
+  color: var(--verde-oscuro);
+  margin-bottom: 4px;
+}
+
+.modal-guia-consejo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(11, 59, 54, 0.06);
+  border-left: 4px solid var(--dorado-vivienco);
+  border-radius: 0 12px 12px 0;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--verde-vivienco);
+}
+
+.modal-guia-consejo strong {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.modal-guia-acciones {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.modal-guia-btn-primario {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--verde-vivienco);
+  color: var(--blanco);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-guia-btn-primario:hover {
+  background: var(--verde-oscuro);
+}
+
+.modal-guia-btn-secundario {
+  background: transparent;
+  color: var(--texto-secundario);
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.modal-guia-btn-secundario:hover {
+  border-color: var(--verde-vivienco);
+  color: var(--verde-vivienco);
+}
+
+/* Colores de alto contraste para las tarjetas de subsidios */
+.bloque-subsidio {
+  background: #0B3B36;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.bloque-subsidio h3,
+.bloque-subsidio .bloque-subsidio__titulo {
+  color: #FFFFFF !important;
+}
+
+.bloque-subsidio p,
+.bloque-subsidio .bloque-subsidio__texto {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.bloque-subsidio .bloque-subsidio__monto {
+  color: #D4AF37 !important;
+}
+
+/* Viñetas doradas para los puntos clave de subsidios */
+.bloque-subsidio .lista-puntos-clave {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+}
+
+.bloque-subsidio .lista-puntos-clave li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.92) !important;
+  line-height: 1.55;
+}
+
+.bloque-subsidio .lista-puntos-clave li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #D4AF37;
+}
+
+/* Recuadro de nota importante en subsidios */
+.bloque-subsidio .tarjeta-educacion__consejo,
+.bloque-subsidio .nota-importante {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FEF3C7 !important;
+  border-left: 3px solid #D4AF37;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 16px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+/* Enlace a la fuente oficial del subsidio */
+.bloque-subsidio .enlace-fuente {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  color: #E8D39A !important;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s, gap 0.2s;
+}
+
+.bloque-subsidio .enlace-fuente:hover,
+.bloque-subsidio .enlace-fuente:focus-visible {
+  color: #FFFFFF !important;
+  border-bottom-color: #D4AF37;
+  gap: 10px;
+}
+
+/* Ventana modal para lectura de artículos y guías */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-lectura-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(6, 44, 41, 0.62);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-lectura-caja {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  max-height: 86vh;
+  overflow-y: auto;
+  background: #FFFFFF;
+  color: #172033;
+  border-radius: 20px;
+  border-top: 5px solid #D4AF37;
+  padding: 36px 34px 30px;
+  box-shadow: 0 30px 70px rgba(6, 44, 41, 0.35);
+  animation: scaleUp 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+.modal-lectura-cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: #F8F6F0;
+  color: #0B3B36;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.modal-lectura-cerrar:hover {
+  background: #0B3B36;
+  color: #FFFFFF;
+  transform: rotate(90deg);
+}
+
+.modal-lectura-cerrar:focus-visible {
+  outline: 3px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+.modal-lectura-etiqueta {
+  display: inline-block;
+  background: #E8D39A;
+  color: #062C29;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.modal-lectura-titulo {
+  margin: 0 40px 16px 0;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #062C29;
+}
+
+.modal-lectura-cuerpo {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #334155;
+}
+
+.modal-lectura-cuerpo p {
+  margin: 0 0 14px;
+}
+
+.modal-lectura-pie {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #E8E4D8;
+}
+
+.modal-lectura-boton {
+  font: inherit;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #0B3B36;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 26px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.modal-lectura-boton:hover {
+  background: #062C29;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .modal-lectura-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .modal-lectura-caja {
+    padding: 28px 20px 22px;
+    max-height: 90vh;
+    border-radius: 20px 20px 14px 14px;
+  }
+}
+
+/* Animación de entrada para secciones y tarjetas */
+@keyframes aparecer-suave {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contenido,
+.secciones-inicio {
+  animation: aparecer-suave 0.6s ease-out backwards;
+}
+
+.rejilla-tres>*,
+.rejilla-subsidios>*,
+.rejilla-bancos>* {
+  animation: aparecer-suave 0.5s ease-out backwards;
+}
+
+.rejilla-tres>*:nth-child(2),
+.rejilla-subsidios>*:nth-child(2),
+.rejilla-bancos>*:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.rejilla-tres>*:nth-child(3),
+.rejilla-bancos>*:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.rejilla-bancos>*:nth-child(n + 4) {
+  animation-delay: 0.22s;
+}
+
+/* Efecto al pasar el cursor sobre las tarjetas */
+.tarjeta-banco,
+.tarjeta-educacion,
+.bloque-subsidio,
+.tope,
+.articulo {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.tarjeta-banco:hover,
+.tarjeta-educacion:hover,
+.tope:hover,
+.articulo:hover {
+  transform: translateY(-5px);
+  border-color: #D4AF37;
+  box-shadow: 0 14px 30px rgba(11, 59, 54, 0.12);
+}
+
+.bloque-subsidio:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 34px rgba(6, 44, 41, 0.35);
+}
+
+/* Cursor interactivo para las tarjetas con modal */
+.tarjeta-educacion,
+.articulo {
+  cursor: pointer;
+}
+
+.tarjeta-educacion:focus-visible,
+.articulo:focus-visible {
+  outline: 3px solid #D4AF37;
+  outline-offset: 3px;
+}
+
+.plazos--envolver {
+  flex-wrap: wrap;
+}
+
+.plazos--envolver .plazos__boton {
+  flex: 1 1 calc(50% - 8px);
+  font-size: 0.84rem;
+}
+
+.tarjeta-banco__subtitulo-cuota {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.aviso-legal-tasas {
+  margin-top: 28px;
+  background: var(--fondo);
+  border: 1px solid var(--borde-suave);
+  border-left: 4px solid #D4AF37;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.aviso-legal-tasas__corto {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--verde-oscuro);
+  margin-bottom: 6px !important;
+  letter-spacing: 0.03em;
+}
+
+.aviso-legal-tasas__texto {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--texto-secundario);
 }
