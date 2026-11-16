@@ -3,7 +3,7 @@ import { X, Lock, RefreshCw } from "lucide-react";
 import "./PanelAdmin.css";
 
 // URL base del backend en producción o local
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL || "https://vivienco-backend.onrender.com";
 
 // Lista de etapas del trámite hipotecario para el panel
 const ETAPAS_CREDITO = [

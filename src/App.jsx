@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import SeccionesInicio, { TarjetasBancosAliados } from "./components/SeccionesInicio";
@@ -12,6 +12,11 @@ function App() {
   // Estado para saber en qué pestaña estamos y si el panel admin está abierto
   const [mostrarAdmin, setMostrarAdmin] = useState(false);
   const [seccionActiva, setSeccionActiva] = useState("inicio");
+
+  // Despierta el servidor de Render en segundo plano al entrar a la página
+  useEffect(() => {
+    fetch("https://vivienco-backend.onrender.com/api/solicitudes").catch(() => {});
+  }, []);
 
   // Cambia de pestaña y sube el scroll al inicio
   const cambiarSeccion = (nuevaSeccion) => {

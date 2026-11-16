@@ -4,7 +4,7 @@ import { bancosAliados, integrantesEquipo } from "../data/datosVivienco";
 import "./Contacto.css";
 
 // URL base del backend en producción o local
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL || "https://vivienco-backend.onrender.com";
 
 const datosIniciales = {
   nombreCompleto: "",
