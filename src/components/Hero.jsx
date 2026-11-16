@@ -1,6 +1,7 @@
 import './Hero.css';
 import { UserCheck, ShieldCheck, Landmark, GraduationCap } from 'lucide-react';
 
+// Banner principal de la página de inicio
 function Hero({ cambiarSeccion }) {
   return (
     <section className="hero-seccion" id="inicio">

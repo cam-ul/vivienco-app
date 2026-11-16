@@ -3,6 +3,7 @@ import { User, Menu, X } from "lucide-react";
 import logoVivienco from "../assets/hero.png";
 import "./Navbar.css";
 
+// Lista de secciones del menú principal
 const ENLACES_MENU = [
   { id: "inicio", texto: "Inicio" },
   { id: "servicios", texto: "Servicios" },
@@ -14,8 +15,10 @@ const ENLACES_MENU = [
 ];
 
 function Navbar({ abrirAdmin, seccionActiva = "inicio", cambiarSeccion }) {
+  // Controla si el menú desplegable está abierto en celular
   const [menuAbierto, setMenuAbierto] = useState(false);
 
+  // Navega a la sección seleccionada y cierra el menú móvil
   const manejarNavegacion = (evento, idSeccion) => {
     evento.preventDefault();
     if (cambiarSeccion) {

@@ -14,10 +14,10 @@ import {
   Headset,
   ArrowRight,
 } from "lucide-react";
-import { bancosAliados } from "../data/datosVivienco";
+import { bancosAliados, configuracionLegalTasas } from "../data/datosVivienco";
 import "./SeccionesInicio.css";
 
-// 6 tarjetas para la pestaña "Servicios" del Navbar
+// Tarjetas para la pestaña de servicios
 const listaServicios = [
   {
     id: 1,
@@ -63,7 +63,7 @@ const listaServicios = [
   },
 ];
 
-// Pasos de la línea de tiempo "¿Cómo te ayudamos?" en Inicio
+// Pasos del proceso hipotecario para el inicio
 const listaPasos = [
   { numero: 1, icono: User, titulo: "Estudio de crédito", descripcion: "Analizamos tu perfil financiero y tu capacidad de pago." },
   { numero: 2, icono: Landmark, titulo: "Comparamos por ti", descripcion: "Buscamos las mejores condiciones entre varios bancos." },
@@ -72,7 +72,7 @@ const listaPasos = [
   { numero: 5, icono: Home, titulo: "Desembolso", descripcion: "Recibes tu crédito y te acercas al hogar que sueñas." },
 ];
 
-// Barra inferior de valores
+// Beneficios de la barra inferior verde
 const listaValores = [
   { id: 1, icono: Tag, titulo: "100% gratuito", descripcion: "El estudio y acompañamiento no tienen costo para ti." },
   { id: 2, icono: ShieldCheck, titulo: "Transparencia", descripcion: "Te explicamos cada paso con claridad." },
@@ -85,12 +85,30 @@ const CLASES_BANCOS = {
   "Banco de Bogotá": "logo-bogota",
   "Banco Caja Social": "logo-cajasocial",
   "AV Villas": "logo-avvillas",
+  "Banco AV Villas": "logo-avvillas",
   "Banco de Occidente": "logo-occidente",
-  "Itaú": "logo-itau",
+  "BBVA": "logo-bbva",
   "Credifamilia": "logo-credifamilia",
 };
 
-// Muestra el logo oficial desde logoUrl (Wikimedia) o desde /logos/; si falla, usa el estilo corporativo
+const MODALIDADES_BANCOS = [
+  { id: "hipotecario", etiqueta: "Crédito hipotecario" },
+  { id: "leasing", etiqueta: "Leasing habitacional" },
+  { id: "compraCartera", etiqueta: "Compra de cartera" },
+  { id: "remodelacion", etiqueta: "Remodelación" },
+];
+
+// Formatea el rango de tasa desde/hasta de cada banco
+const formatearRangoTasa = (rango) => {
+  if (!rango || typeof rango.desde !== "number") {
+    return "No aplica en esta modalidad";
+  }
+  const desde = Number(rango.desde).toFixed(2);
+  const hasta = Number(rango.hasta ?? rango.desde).toFixed(2);
+  return `Desde ${desde}% hasta ${hasta}% E.A.`;
+};
+
+// Si la imagen del banco no carga, mostramos el nombre con estilo
 function LogoBanco({ banco }) {
   const [fallaImagen, setFallaImagen] = useState(false);
   const claseEstilo = CLASES_BANCOS[banco.nombre] || "logo-bancolombia";
@@ -105,6 +123,8 @@ function LogoBanco({ banco }) {
       className="logo-imagen"
       src={rutaLogo}
       alt={`Logo de ${banco.nombre}`}
+      width="160"
+      height="56"
       loading="lazy"
       onError={() => setFallaImagen(true)}
     />
@@ -134,7 +154,7 @@ function SeccionesInicio({ seccionActiva = "inicio", cambiarSeccion }) {
     }
   };
 
-  // Vista exclusiva cuando el usuario hace clic en "Servicios" en el Navbar o en "Conoce nuestros servicios"
+  // Si estamos en la pestaña de servicios, mostramos solo las 6 tarjetas amplias
   if (seccionActiva === "servicios") {
     return (
       <section className="secciones-inicio" id="servicios">
@@ -177,11 +197,11 @@ function SeccionesInicio({ seccionActiva = "inicio", cambiarSeccion }) {
     );
   }
 
-  // Vista de Inicio (Sin "Nuestros Servicios", con "¿Cómo te ayudamos?" a ancho completo)
+  // Contenido principal de la pestaña de inicio
   return (
     <section className="secciones-inicio">
       <div className="secciones-contenedor">
-        {/* 1. ¿Cómo te ayudamos? (ancho completo) */}
+        {/* Línea de pasos de cómo ayudamos */}
         <div className="bloque-pasos">
           <h2 className="titulo-bloque titulo-bloque--centrado">¿CÓMO TE AYUDAMOS?</h2>
           <ol className="linea-pasos">
@@ -202,7 +222,7 @@ function SeccionesInicio({ seccionActiva = "inicio", cambiarSeccion }) {
           </ol>
         </div>
 
-        {/* 2. Carrusel infinito de bancos aliados */}
+        {/* Carrusel de logos de bancos aliados */}
         <div className="bloque-bancos">
           <h2 className="titulo-bancos">BANCOS ALIADOS</h2>
           <div className="carrusel" aria-label="Bancos aliados de Vivienco">
@@ -225,7 +245,7 @@ function SeccionesInicio({ seccionActiva = "inicio", cambiarSeccion }) {
           </div>
         </div>
 
-        {/* 3. Aprende con Vivienco (Redirige a Educación Financiera) */}
+        {/* Bloque informativo para ir a educación financiera */}
         <div className="bloque-aprende">
           <div className="aprende-texto">
             <h2 className="aprende-titulo">APRENDE CON VIVIENCO</h2>
@@ -245,7 +265,7 @@ function SeccionesInicio({ seccionActiva = "inicio", cambiarSeccion }) {
         </div>
       </div>
 
-      {/* 4. Barra inferior de valores */}
+      {/* Barra verde con los valores de Vivienco */}
       <div className="barra-valores">
         <ul className="barra-valores__lista">
           {listaValores.map(({ id, icono: Icono, titulo, descripcion }) => (
@@ -265,53 +285,87 @@ function SeccionesInicio({ seccionActiva = "inicio", cambiarSeccion }) {
   );
 }
 
-// Tarjetas detalladas para la pestaña "Bancos Aliados"
+// Tarjetas con rangos de tasas por modalidad para la sección de bancos aliados
 export function TarjetasBancosAliados() {
+  const [modalidad, setModalidad] = useState("hipotecario");
+
   return (
     <section className="bancos-detalle">
       <div className="bancos-detalle__interior">
         <header className="bancos-detalle__encabezado">
+          <span className="sello-vigencia-tasas">
+            Actualizado: {configuracionLegalTasas.mesVigencia}
+          </span>
           <h2 className="bancos-detalle__titulo">Nuestros Bancos Aliados</h2>
           <p className="bancos-detalle__subtitulo">
-            Trabajamos con las principales entidades financieras del país para conseguirte la mejor opción de crédito hipotecario o leasing habitacional.
+            Consulta los rangos de tasas Efectivas Anuales (E.A.) por modalidad y tipo de vivienda en nuestras 7 entidades aliadas.
           </p>
+
+          <div className="selector-modalidad-bancos" role="tablist" aria-label="Modalidad de crédito">
+            {MODALIDADES_BANCOS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={modalidad === item.id}
+                className={`selector-modalidad-btn ${
+                  modalidad === item.id ? "selector-modalidad-btn--activo" : ""
+                }`}
+                onClick={() => setModalidad(item.id)}
+              >
+                {item.etiqueta}
+              </button>
+            ))}
+          </div>
         </header>
 
         <div className="bancos-detalle__rejilla">
-          {bancosAliados.map((banco) => (
-            <article className="tarjeta-banco-detalle" key={banco.id}>
-              <div className="tarjeta-banco-detalle__logo">
-                <LogoBanco banco={banco} />
-              </div>
+          {bancosAliados.map((banco) => {
+            const tasasModalidad = banco.tasas?.[modalidad] || {};
+            const rangoVIS = tasasModalidad.VIS ?? tasasModalidad.vis ?? null;
+            const rangoNoVIS = tasasModalidad.noVis ?? tasasModalidad.noVIS ?? null;
 
-              <h3 className="tarjeta-banco-detalle__nombre">{banco.nombre}</h3>
-
-              <p className="tarjeta-banco-detalle__tasa">
-                <span className="tarjeta-banco-detalle__tasa-valor">
-                  {Number(banco.tasaEA).toFixed(2)}% E.A.
-                </span>
-                <span className="tarjeta-banco-detalle__tasa-etiqueta">Tasa de referencia</span>
-              </p>
-
-              <div className="tarjeta-banco-detalle__financiacion">
-                <div className="financiacion-dato">
-                  <span className="financiacion-dato__valor">{banco.financiacionVIS || 80}%</span>
-                  <span className="financiacion-dato__texto">Hasta en VIS</span>
+            return (
+              <article className="tarjeta-banco-detalle" key={banco.id}>
+                <div className="tarjeta-banco-detalle__logo">
+                  <LogoBanco banco={banco} />
                 </div>
-                <div className="financiacion-dato">
-                  <span className="financiacion-dato__valor">{banco.financiacionNoVIS || 70}%</span>
-                  <span className="financiacion-dato__texto">Hasta en No VIS</span>
-                </div>
-              </div>
 
-              <p className="tarjeta-banco-detalle__descripcion">{banco.descripcion}</p>
-            </article>
-          ))}
+                <h3 className="tarjeta-banco-detalle__nombre">{banco.nombre}</h3>
+
+                <div className="tarjeta-banco-detalle__rangos">
+                  <div className={`rango-tasa-item ${!rangoVIS ? "rango-tasa-item--inactivo" : ""}`}>
+                    <span className="rango-tasa-item__tipo">VIS:</span>
+                    <span className="rango-tasa-item__valor">{formatearRangoTasa(rangoVIS)}</span>
+                  </div>
+
+                  <div className={`rango-tasa-item ${!rangoNoVIS ? "rango-tasa-item--inactivo" : ""}`}>
+                    <span className="rango-tasa-item__tipo">No VIS:</span>
+                    <span className="rango-tasa-item__valor">{formatearRangoTasa(rangoNoVIS)}</span>
+                  </div>
+                </div>
+
+                <div className="tarjeta-banco-detalle__financiacion">
+                  <div className="financiacion-dato">
+                    <span className="financiacion-dato__valor">{banco.financiacionVIS || 80}%</span>
+                    <span className="financiacion-dato__texto">Hasta en VIS</span>
+                  </div>
+                  <div className="financiacion-dato">
+                    <span className="financiacion-dato__valor">{banco.financiacionNoVIS || 70}%</span>
+                    <span className="financiacion-dato__texto">Hasta en No VIS</span>
+                  </div>
+                </div>
+
+                <p className="tarjeta-banco-detalle__descripcion">{banco.descripcion}</p>
+              </article>
+            );
+          })}
         </div>
 
-        <p className="bancos-detalle__aviso">
-          Tasas de referencia sujetas a estudio de crédito y políticas vigentes de cada entidad.
-        </p>
+        <div className="aviso-legal-tasas" role="note">
+          <p className="aviso-legal-tasas__corto">{configuracionLegalTasas.avisoCorto}</p>
+          <p className="aviso-legal-tasas__texto">{configuracionLegalTasas.avisoLegalCompleto}</p>
+        </div>
       </div>
     </section>
   );

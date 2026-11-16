@@ -6,12 +6,14 @@ import SeccionesContenido from "./components/SeccionesContenido";
 import Contacto from "./components/Contacto";
 import PanelAdmin from "./components/PanelAdmin";
 import AsistenteIA from "./components/AsistenteIA";
-import logoVivienco from "./assets/hero.png";
+import "./App.css";
 
 function App() {
+  // Estado para saber en qué pestaña estamos y si el panel admin está abierto
   const [mostrarAdmin, setMostrarAdmin] = useState(false);
   const [seccionActiva, setSeccionActiva] = useState("inicio");
 
+  // Cambia de pestaña y sube el scroll al inicio
   const cambiarSeccion = (nuevaSeccion) => {
     setSeccionActiva(nuevaSeccion);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -61,24 +63,16 @@ function App() {
       <footer className="pie-pagina">
         <a
           href="#inicio"
+          className="pie-pagina__marca"
           onClick={(e) => {
             e.preventDefault();
             cambiarSeccion("inicio");
           }}
         >
-          <img
-            src={logoVivienco}
-            alt="Vivienco - Especialistas en Créditos de Vivienda"
-            style={{
-              height: "54px",
-              width: "auto",
-              objectFit: "contain",
-              marginBottom: "10px",
-              background: "#ffffff",
-              padding: "6px 14px",
-              borderRadius: "10px",
-            }}
-          />
+          <span className="pie-pagina__logo">VIVIENCO</span>
+          <span className="pie-pagina__subtitulo">
+            Especialistas en Créditos de Vivienda
+          </span>
         </a>
         <p className="pie-pagina__derechos">
           © 2026 Vivienco · Especialistas en Crédito Hipotecario y Leasing Habitacional en Colombia.

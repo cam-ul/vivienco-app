@@ -19,20 +19,23 @@ function Contacto() {
   const [asesorSeleccionado, setAsesorSeleccionado] = useState(
     integrantesEquipo[0]?.nombre || "un especialista"
   );
+  const [fotosConError, setFotosConError] = useState({});
 
   const manejarCambio = (evento) => {
     const { name, value } = evento.target;
     setDatosFormulario((anterior) => ({ ...anterior, [name]: value }));
   };
 
+  // Abre WhatsApp con un mensaje listo para el asesor elegido
   const abrirWhatsAppAsesor = (nombreAsesor, cargoAsesor, telefonoAsesor) => {
-    const numero = telefonoAsesor || "573003398593";
+    const numero = telefonoAsesor || "573016196503";
     const texto = encodeURIComponent(
       `¡Hola ${nombreAsesor}! Vengo desde la página web de Vivienco y me gustaría recibir asesoría gratuita contigo (${cargoAsesor}) para mi crédito de vivienda.`
     );
     window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
   };
 
+  // Envía el formulario de solicitud de estudio al backend
   const enviarSolicitud = async (evento) => {
     evento.preventDefault();
     setErrorEnvio("");
@@ -156,7 +159,7 @@ function Contacto() {
               </option>
               {bancosAliados.map((banco) => (
                 <option key={banco.id} value={banco.nombre}>
-                  {banco.nombre} (Tasa ref: {banco.tasaEA}% E.A.)
+                  {banco.nombre} (Desde {banco.tasaEA}% E.A.)
                 </option>
               ))}
             </select>
@@ -180,7 +183,7 @@ function Contacto() {
         </form>
       </div>
 
-      {/* Selector de Asesores y Redirección directa a WhatsApp */}
+      {/* Tarjetas de los asesores con botón directo a WhatsApp */}
       <div className="equipo" id="asesores-whatsapp">
         <span className="equipo__etiqueta">Atención inmediata por WhatsApp</span>
         <h2 className="equipo__titulo">Elige a tu especialista de confianza</h2>
@@ -196,7 +199,9 @@ function Contacto() {
               .slice(0, 2)
               .join("");
 
+            const primerNombre = integrante.nombre.split(" ")[0];
             const activo = asesorSeleccionado === integrante.nombre;
+            const mostrarFoto = Boolean(integrante.fotoUrl) && !fotosConError[integrante.id];
 
             return (
               <article
@@ -205,20 +210,75 @@ function Contacto() {
                 onClick={() => setAsesorSeleccionado(integrante.nombre)}
                 style={{
                   cursor: "pointer",
-                  border: activo ? "2px solid #0b3b36" : "1px solid #e5e7eb",
+                  border: activo ? "2px solid #0b3b36" : undefined,
                 }}
               >
-                <div className="tarjeta-integrante__avatar" aria-hidden="true">
-                  {iniciales}
+                <div
+                  className="tarjeta-integrante__foto-contenedor"
+                  style={
+                    !mostrarFoto
+                      ? {
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "linear-gradient(135deg, #0b3b36, #062c29)",
+                      }
+                      : undefined
+                  }
+                >
+                  {mostrarFoto ? (
+                    <img
+                      className="tarjeta-integrante__foto"
+                      src={integrante.fotoUrl}
+                      alt={`Foto de ${integrante.nombre}`}
+                      width="320"
+                      height="280"
+                      loading="lazy"
+                      onError={() =>
+                        setFotosConError((prev) => ({ ...prev, [integrante.id]: true }))
+                      }
+                    />
+                  ) : (
+                    <div
+                      className="tarjeta-integrante__avatar"
+                      style={{ margin: 0, width: "88px", height: "88px", fontSize: "1.6rem" }}
+                      aria-hidden="true"
+                    >
+                      {iniciales}
+                    </div>
+                  )}
+
+                  {integrante.experiencia && (
+                    <span className="tarjeta-integrante__experiencia">
+                      {integrante.experiencia}
+                    </span>
+                  )}
                 </div>
+
                 <h3 className="tarjeta-integrante__nombre">{integrante.nombre}</h3>
                 <p className="tarjeta-integrante__cargo">{integrante.cargo}</p>
+
                 {integrante.trayectoria && (
-                  <p className="tarjeta-integrante__bio">{integrante.trayectoria}</p>
+                  <p
+                    className="tarjeta-integrante__bio"
+                    style={{ marginBottom: "14px" }}
+                  >
+                    {integrante.trayectoria}
+                  </p>
+                )}
+
+                {Array.isArray(integrante.puntosClave) && integrante.puntosClave.length > 0 && (
+                  <ul className="tarjeta-integrante__lista">
+                    {integrante.puntosClave.slice(0, 4).map((punto, idx) => (
+                      <li key={idx}>{punto}</li>
+                    ))}
+                  </ul>
                 )}
 
                 <button
                   type="button"
+                  className="tarjeta-integrante__whatsapp"
+                  style={{ width: "100%", border: "none", cursor: "pointer", fontFamily: "inherit" }}
                   onClick={(e) => {
                     e.stopPropagation();
                     abrirWhatsAppAsesor(
@@ -227,25 +287,9 @@ function Contacto() {
                       integrante.whatsapp
                     );
                   }}
-                  style={{
-                    marginTop: "16px",
-                    width: "100%",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    background: "#16a34a",
-                    color: "#ffffff",
-                    border: "none",
-                    borderRadius: "10px",
-                    padding: "10px 14px",
-                    fontWeight: "600",
-                    fontSize: "0.9rem",
-                    cursor: "pointer",
-                  }}
                 >
                   <MessageCircle size={18} />
-                  Hablar con {integrante.nombre.split(" ")[0]}
+                  Hablar con {primerNombre}
                 </button>
               </article>
             );

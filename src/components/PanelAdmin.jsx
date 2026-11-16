@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { X, Lock, RefreshCw } from "lucide-react";
 import "./PanelAdmin.css";
 
+// Lista de etapas del trámite hipotecario para el panel
 const ETAPAS_CREDITO = [
     "1. Estudio de crédito",
     "2. Recolección de documentos",
@@ -20,6 +21,7 @@ function PanelAdmin({ cerrarPanel }) {
     const [solicitudes, setSolicitudes] = useState([]);
     const [cargando, setCargando] = useState(false);
 
+    // Consulta las solicitudes registradas en el backend
     const obtenerSolicitudes = async () => {
         setCargando(true);
         try {
@@ -35,6 +37,7 @@ function PanelAdmin({ cerrarPanel }) {
         }
     };
 
+    // Actualiza la etapa de una solicitud en pantalla y en el servidor
     const cambiarEtapa = async (id, nuevaEtapa) => {
         setSolicitudes((anteriores) =>
             anteriores.map((item) =>
