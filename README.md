@@ -87,59 +87,8 @@ vivienco-app/
 
 ---
 
-## 5. Instrucciones de Instalación y Ejecución Local
 
-### Prerrequisitos
-- **Node.js** v18 o superior instalado.
-- Cuenta o URI de conexión en **MongoDB Atlas** (opcional para pruebas rápidas gracias al respaldo local integrado).
-
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/tu-usuario/vivienco-app.git
-cd vivienco-app
-```
-
-### 2. Instalar dependencias del Frontend y del Backend
-```bash
-# Instalar dependencias del frontend (raíz del proyecto)
-npm install
-
-# Instalar dependencias del backend
-cd backend
-npm install
-cd ..
-```
-
-### 3. Configurar las variables de entorno del Backend (`backend/.env`)
-Crea un archivo `.env` dentro de la carpeta `backend/` con las siguientes variables:
-
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://<usuario>:<password>@<cluster>.mongodb.net/vivienco?retryWrites=true&w=majority
-ADMIN_USER=admin@vivienco.com
-ADMIN_PASS=vivienco2026
-GEMINI_API_KEY=tu_clave_api_de_gemini_opcional
-```
-
-### 4. Iniciar los servidores en desarrollo
-Abre dos terminales en la raíz del proyecto:
-
-**Terminal 1 — Iniciar el Backend (Puerto 5000):**
-```bash
-cd backend
-node server.js
-```
-
-**Terminal 2 — Iniciar el Frontend con Vite:**
-```bash
-npm run dev
-```
-
-Abre en tu navegador la URL indicada por Vite (por defecto `http://localhost:5173`).
-
----
-
-## 6. Aviso Legal sobre Tasas de Referencia
+## 5. Aviso Legal sobre Tasas de Referencia
 
 > **Aviso legal (Cumplimiento Ley 1480 de 2011 - Estatuto del Consumidor):**  
 > Las tasas Efectivas Anuales (% E.A.), rangos por modalidad y simulaciones de cuotas presentadas en este portal son estrictamente informativas y de referencia para el mes vigente (**Noviembre 2026**). No constituyen una oferta comercial vinculante, promesa de tasa ni aprobación de crédito. La tasa definitiva, el porcentaje de financiación y las condiciones finales dependerán del estudio de riesgo crediticio del solicitante y de las políticas vigentes de cada entidad financiera aliada al momento de la aprobación y desembolso.
